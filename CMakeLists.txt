@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION  3.5)
 project(main C CXX)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD  11)
 
 # Setting parameters for OpenGL
 set(OpenGL_GL_PREFERENCE GLVND)
@@ -12,14 +12,23 @@ set(BUILD_GAMES    OFF CACHE BOOL "" FORCE) # or games
 
 add_subdirectory(libs/raylib)
 
-add_executable(Bubbleshoot 
-	src/main.cpp
-)
-target_link_libraries(Bubbleshoot PRIVATE raylib)
-file(
-	COPY assets
-	DESTINATION ${CMAKE_BINARY_DIR}
+# Define WORKING_DIRECTORY to the directory containing your headers
+set(WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+
+# Add the executable target before setting include directories
+add_executable(Bubbleshoot  
+  src/main.cpp
+  src/scene.cpp
 )
 
-# target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="${CMAKE_CURRENT_SOURCE_DIR}/assets/") # Set the asset path macro to the absolute path on the dev machine
-#target_compile_definitions(${PROJECT_NAME} PUBLIC ASSETS_PATH="relative-path-to-assets-in-the-game-package") # Set the asset path macro in release more
+# Now set the include directories for Bubbleshoot
+target_include_directories(Bubbleshoot PUBLIC ${WORKING_DIRECTORY}/headers)
+
+# Link raylib to your executable
+target_link_libraries(Bubbleshoot PRIVATE raylib)
+
+# Copy assets to the binary directory
+file(
+  COPY assets
+  DESTINATION ${CMAKE_BINARY_DIR}
+)

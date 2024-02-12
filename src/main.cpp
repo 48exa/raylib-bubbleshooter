@@ -1,10 +1,12 @@
-#include "raylib.h"
+#include <raylib.h>
+#include <scene.h>
 
-int main()
+int main(void)
 {
-    InitWindow(1280, 720, "Window title");
 
-    while (!WindowShouldClose())
+    Scene *scene = new Scene(1280, 720, "Bubble Shooter");
+
+    while (scene->scene_active())
     {
         BeginDrawing();
 
