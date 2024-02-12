@@ -69,10 +69,3 @@ void Entity::addTexture(std::string filePath)
   if (IsPathFile(filePath.c_str()))
     LoadTexture(filePath.c_str());
 }
-
-void Entity::tick(float deltaTime)
-{
-  BeginDrawing();
-  update(deltaTime);
-  EndDrawing();
-}

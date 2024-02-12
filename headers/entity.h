@@ -1,5 +1,5 @@
-#ifndef SUPERSCENE_H
-#define SUPERSCENE_H
+#ifndef ENTITY_H
+#define ENTITY_H
 
 #include <raylib.h>
 #include <iostream>
@@ -55,12 +55,9 @@ protected:
   /// @brief Original position of Entity, not relative to the parent
   Vector3 _worldposition;
 
-private:
-  /// @brief Core of the Entity, runs every frame until the user closes app
-  /// @param deltaTime Time elapsed since last frame draw.
-  /// @return void
-  void tick(float deltaTime);
 
+
+private:
   /// @brief Texture of an Entity
   Texture2D _texture;
 

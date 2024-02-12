@@ -1,11 +1,14 @@
 #include <scene.h>
 
-Scene::Scene(int width, int height, std::string title, bool vsync) : Entity()
+Scene::Scene(uint16_t width, uint16_t height, std::string title) : Entity()
 {
   assert(!GetWindowHandle());
   InitWindow(width, height, title.c_str());
 
-  if (vsync)
+  _shouldDrawFPS = false;
+  _shouldUseVsync = true;
+
+  if (_shouldUseVsync)
     SetTargetFPS(GetMonitorRefreshRate(0));
 }
 
@@ -17,5 +20,28 @@ Scene::~Scene()
 
 void Scene::update(float deltaTime)
 {
-  DrawText("Hello World!", 10, 30, 30, WHITE);
+}
+
+void Scene::tick(float deltaTime)
+{
+  BeginDrawing();
+  update(deltaTime);
+  draw();
+  EndDrawing();
+}
+
+void Scene::draw()
+{
+  ClearBackground(BLACK);
+  if (_shouldDrawFPS)
+    DrawFPS(10, 10);
+}
+
+void Scene::toggleVsync()
+{
+  this->_shouldUseVsync = !this->_shouldUseVsync;
+  if (_shouldUseVsync)
+    SetTargetFPS(GetMonitorRefreshRate(0));
+  else
+    SetTargetFPS(32768); // Arbitrary FPS limit set to the 16 bit signed integer limit
 }
