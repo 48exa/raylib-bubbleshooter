@@ -1,23 +1,16 @@
-#include <raylib.h>
 #include <scene.h>
 
 int main(void)
 {
+    int SCREEN_WIDTH = 1280;
+    int SCREEN_HEIGHT = 720;
 
-    Scene *scene = new Scene(1280, 720, "Bubble Shooter");
+    Scene *scene = new Scene(SCREEN_WIDTH, SCREEN_HEIGHT, "Bubble Shooter", true);
 
-    while (scene->scene_active())
+    while (scene->active())
     {
-        BeginDrawing();
-
-        ClearBackground(BLACK);
-        DrawText("Hello World!", 10, 30, 16, WHITE);
-        DrawFPS(10, 10);
-
-        EndDrawing();
+        scene->tick(GetFrameTime());
     }
-
-    CloseWindow();
 
     return 0;
 }

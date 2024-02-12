@@ -1,19 +1,21 @@
 #include <scene.h>
 
-Scene::Scene(uint16_t width, uint16_t height, std::string title)
+Scene::Scene(int width, int height, std::string title, bool vsync) : Entity()
 {
+  assert(!GetWindowHandle());
   InitWindow(width, height, title.c_str());
+
+  if (vsync)
+    SetTargetFPS(GetMonitorRefreshRate(0));
 }
 
 Scene::~Scene()
 {
+  assert(GetWindowHandle());
+  CloseWindow();
 }
 
 void Scene::update(float deltaTime)
 {
-}
-
-bool Scene::scene_active() const
-{
-  return WindowShouldClose();
+  DrawText("Hello World!", 10, 30, 30, WHITE);
 }

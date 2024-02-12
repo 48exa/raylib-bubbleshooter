@@ -18,6 +18,7 @@ set(WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 # Add the executable target before setting include directories
 add_executable(Bubbleshoot  
   src/main.cpp
+  src/entity.cpp
   src/scene.cpp
 )
 
