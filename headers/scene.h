@@ -1,3 +1,14 @@
+/**
+ * @file scene.h
+ *
+ * @brief Header file of the scene class
+ *
+ * This file is part of RLFWB, a RayLib Framework for Bubbleshooter
+ *
+ * - Copyright 2024 Douwe westerdijk <westerdijk@protonmail.com>
+ *
+ */
+
 #ifndef SCENE_H
 #define SCENE_H
 

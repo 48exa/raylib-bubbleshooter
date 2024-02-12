@@ -1,3 +1,14 @@
+/**
+ * @file entity.h
+ *
+ * @brief Header file of the Entity class
+ *
+ * This file is part of RLFWB, a RayLib Framework for Bubbleshooter
+ *
+ * - Copyright 2024 Douwe westerdijk <westerdijk@protonmail.com>
+ *
+ */
+
 #ifndef ENTITY_H
 #define ENTITY_H
 
