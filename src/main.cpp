@@ -1,7 +1,7 @@
 #include "raylib.h"
 
-constexpr auto SCREEN_WIDTH  = 800;
-constexpr auto SCREEN_HEIGHT = 450;
+constexpr auto SCREEN_WIDTH  = 1280;
+constexpr auto SCREEN_HEIGHT = 720;
 
 int main()
 {
