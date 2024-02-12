@@ -1,11 +1,11 @@
-#include <scene.h>
+#include <bubbleshooter.h>
 
 int main(void)
 {
-    int SCREEN_WIDTH = 1280;
-    int SCREEN_HEIGHT = 720;
+    uint16_t SCREEN_WIDTH = 1280;
+    uint16_t SCREEN_HEIGHT = 720;
 
-    Scene *scene = new Scene(SCREEN_WIDTH, SCREEN_HEIGHT, "Bubble Shooter");
+    Bubbleshooter *scene = new Bubbleshooter(SCREEN_WIDTH, SCREEN_HEIGHT, "Bubble Shooter");
     scene->toggleDrawFPS();
     scene->toggleVsync();
 

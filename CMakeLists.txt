@@ -21,6 +21,7 @@ add_executable(Bubbleshoot
   src/entity.cpp
   src/scene.cpp
   src/timer.cpp
+  src/bubbleshooter.cpp
 )
 
 # Now set the include directories for Bubbleshoot
