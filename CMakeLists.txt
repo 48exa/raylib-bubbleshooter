@@ -14,6 +14,9 @@ add_subdirectory(libs/raylib)
 
 add_executable(Bubbleshoot 
 	src/main.cpp
+
+	src/scene.cpp
+	src/scene.h
 	src/bubble.cpp
 	src/bubble.h
 	src/level1.cpp
@@ -23,6 +26,7 @@ add_executable(Bubbleshoot
 	src/level3.cpp
 	src/level3.h
 
+	framework/global.h
 	framework/entity.cpp
 	framework/entity.h
 	framework/gui.cpp
@@ -33,6 +37,8 @@ add_executable(Bubbleshoot
 	framework/superlevel.h
 	framework/superscene.cpp
 	framework/superscene.h
+	framework/timer.cpp
+	framework/timer.h
 )
 target_link_libraries(Bubbleshoot PRIVATE raylib)
 file(

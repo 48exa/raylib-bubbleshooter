@@ -4,10 +4,13 @@
 
 SuperScene::SuperScene()
 {
-
 }
 
 SuperScene::~SuperScene()
+{
+}
+
+void SuperScene::update(float deltaTime)
 {
 
 }

@@ -3,6 +3,8 @@
 #ifndef SUPERLEVEL_H
 #define SUPERLEVEL_H
 
+#include "global.h"
+
 class SuperLevel
 {
 public:
