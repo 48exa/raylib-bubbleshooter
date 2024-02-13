@@ -1,3 +1,8 @@
+![GitHub repo size](https://img.shields.io/github/repo-size/48exa/raylib-bubbleshooter)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/48exa/raylib-bubbleshooter)
+![GitHub repo file or directory count](https://img.shields.io/github/directory-file-count/48exa/raylib-bubbleshooter)
+![GitHub last commit](https://img.shields.io/github/last-commit/48exa/raylib-bubbleshooter)
+
 # Bubbleshooter made in Raylib using C++
 
 > I Removed the library files this repo because they clutter the it up. If you're planning to clone this for reasons I don't understand you can download Raylib [here](https://github.com/raysan5/raylib). (just follow the [wiki](https://github.com/raysan5/raylib/wiki/Working-on-Windows) or use the [releases tab](https://github.com/raysan5/raylib/releases/)) (you can also download the files from my repo if you go to [this link of an old commit where I originally added them](https://github.com/48exa/raylib-bubbleshooter/tree/b222615d875bfd094b56642e9022b2064ab524be), this way guarantees that all the lib files are correct)

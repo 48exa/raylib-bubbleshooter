@@ -1,0 +1,24 @@
+# @format
+
+on: [push]
+name: Run Test
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: Test Run
+    steps:
+      - name: Make Code Badge
+        uses: shadowmoose/GHA-LoC-Badge@1.0.0
+        id: badge
+        with:
+          debug: true
+          directory: ./
+          badge: ./output/badge.svg
+          patterns: "*.cpp, *.h, *.txt"
+          ignore: "libs"
+
+      - name: Print the output
+        run: |
+          echo "Scanned: ${{ steps.badge.outputs.counted_files }}";
+          echo "Line Count: ${{ steps.badge.outputs.total_lines }}";
