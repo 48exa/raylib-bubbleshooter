@@ -51,6 +51,7 @@ public:
   /// @brief Getter for the parent of an Entity
   /// @return Parent of an Entity
   Entity *parent() { return _parent; };
+  void setTextureColor(Color c);
 
   /// @brief Getter for the children of an Entity
   /// @return std::vector<Entity> of the children of an Entity
@@ -58,6 +59,9 @@ public:
   /// @brief Getter for the guid of an Entity
   /// @return The guid of an Entity
   int guid() { return _guid; };
+  Texture2D texture() { return _texture; };
+  Color color() { return _textureColor; };
+  Vector2 size() { return Vector2{(float)_texture.width, (float)_texture.height}; };
 
   /// @brief Position vector for an Entity
   Vector3 position;
@@ -66,12 +70,10 @@ protected:
   /// @brief Original position of Entity, not relative to the parent
   Vector3 _worldposition;
 
-
-
 private:
   /// @brief Texture of an Entity
   Texture2D _texture;
-
+  Color _textureColor;
   /// @brief Vector containing all the children of an Entity
   std::vector<Entity *> _children;
   /// @brief The parent of an Entity

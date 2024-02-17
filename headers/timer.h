@@ -21,7 +21,7 @@ public:
   Timer();
   ~Timer();
 
-  /// @brief Start the Timer
+  /// @brief Start the Timer, also functions as reset
   void start();
   /// @brief Stop the Timer
   void stop();

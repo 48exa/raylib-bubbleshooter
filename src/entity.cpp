@@ -67,5 +67,10 @@ void Entity::addTexture(std::string filePath)
 {
   removeTexture();
   if (IsPathFile(filePath.c_str()))
-    LoadTexture(filePath.c_str());
+    this->_texture = LoadTexture(filePath.c_str());
+}
+
+void Entity::setTextureColor(Color c)
+{
+  this->_textureColor = c;
 }

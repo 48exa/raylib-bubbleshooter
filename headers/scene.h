@@ -13,6 +13,10 @@
 #define SCENE_H
 
 #include <entity.h>
+#include <timer.h>
+
+constexpr uint16_t SCREEN_HEIGHT = 720;
+constexpr uint16_t SCREEN_WIDTH = 1280;
 
 class Scene : public Entity
 {
@@ -47,6 +51,7 @@ public:
   bool isActive() { return !WindowShouldClose(); };
 
 private:
+  Timer *t;
   /// @brief Wether or not the scene should draw FPS
   bool _shouldDrawFPS;
   /// @brief Wether or not the scene should use vsync

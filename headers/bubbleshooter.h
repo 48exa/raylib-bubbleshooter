@@ -13,6 +13,8 @@
 #define BUBBLESHOOTER_H
 
 #include <scene.h>
+#include <timer.h>
+#include <entity.h>
 
 class Bubbleshooter : public Scene
 {
@@ -23,6 +25,8 @@ public:
   virtual void update(float deltaTime);
 
 private:
+  Timer *t;
+  Entity *entity;
 };
 
 #endif

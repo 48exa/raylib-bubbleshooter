@@ -10,6 +10,9 @@ Scene::Scene(uint16_t width, uint16_t height, std::string title) : Entity()
 
   if (_shouldUseVsync)
     SetTargetFPS(GetMonitorRefreshRate(0));
+
+  t = new Timer();
+  t->start();
 }
 
 Scene::~Scene()
@@ -20,6 +23,7 @@ Scene::~Scene()
 
 void Scene::update(float deltaTime)
 {
+  
 }
 
 void Scene::tick(float deltaTime)
@@ -41,7 +45,7 @@ void Scene::toggleVsync()
 {
   this->_shouldUseVsync = !this->_shouldUseVsync;
   if (_shouldUseVsync)
-    SetTargetFPS(GetMonitorRefreshRate(0));
+    SetWindowState(FLAG_VSYNC_HINT);
   else
-    SetTargetFPS(32768); // Arbitrary FPS limit set to the 16 bit signed integer limit
+    SetTargetFPS(32767); // Arbitrary FPS limit set to the 16 bit signed integer limit
 }
