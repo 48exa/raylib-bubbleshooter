@@ -25,7 +25,7 @@ public:
   /// @param width Width of the screen in pixels.
   /// @param height Height of the screen in pixels.
   /// @param title Title of the screen
-  Scene(uint16_t width, uint16_t height, std::string title);
+  Scene(uint16_t width, uint16_t height, char *title);
   /// @brief Deconstructor of a scene
   ~Scene();
 
@@ -42,7 +42,7 @@ public:
   void draw();
   /// @brief Toggle the drawing of the FPS
   /// @return void
-  void toggleDrawFPS() { this->_shouldDrawFPS = !this->_shouldDrawFPS; };
+  void toggleDrawFPS() { settings.drawfps = !settings.drawfps; };
   /// @brief Toggle the use of vsync
   /// @return void
   void toggleVsync();
@@ -50,12 +50,15 @@ public:
   /// @return Wether the scene is active or not
   bool isActive() { return !WindowShouldClose(); };
 
+protected:
 private:
   Timer *t;
   /// @brief Wether or not the scene should draw FPS
-  bool _shouldDrawFPS;
-  /// @brief Wether or not the scene should use vsync
-  bool _shouldUseVsync;
+  struct
+  {
+    bool vsync;
+    bool drawfps;
+  } settings;
 };
 
 #endif

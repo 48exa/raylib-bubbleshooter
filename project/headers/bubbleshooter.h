@@ -14,19 +14,19 @@
 
 #include <scene.h>
 #include <timer.h>
-#include <entity.h>
+#include <bubble.h>
 
 class Bubbleshooter : public Scene
 {
 public:
-  Bubbleshooter(uint16_t width, uint16_t height, std::string title);
+  Bubbleshooter(uint16_t width, uint16_t height, char *title);
   ~Bubbleshooter();
 
   virtual void update(float deltaTime);
 
 private:
   Timer *t;
-  Entity *entity;
+  Bubble *bubble;
 };
 
 #endif

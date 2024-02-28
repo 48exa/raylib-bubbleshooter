@@ -16,7 +16,6 @@
 #include <iostream>
 #include <assert.h>
 #include <vector>
-
 #define BACKGROUND_COLOR (BLACK)
 
 class Entity
@@ -44,7 +43,7 @@ public:
   /// @brief Add a texture to an Entity
   /// @param filePath string of local path to the texture
   /// @return void
-  void addTexture(std::string filePath);
+  void addTexture(char *filePath);
   /// @brief Remove the texture from an Entity
   /// @return void
   void removeTexture();
@@ -71,7 +70,7 @@ protected:
   Vector3 _worldposition;
 
 private:
-    /// @brief Texture of an Entity
+  /// @brief Texture of an Entity
   Texture2D _texture;
   Color _textureColor;
   /// @brief Vector containing all the children of an Entity

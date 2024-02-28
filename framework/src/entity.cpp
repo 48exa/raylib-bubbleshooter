@@ -23,9 +23,9 @@ void Entity::update(float deltaTime)
 
 void Entity::addChild(Entity *child)
 {
-  child->_parent = nullptr;
   if (child->_parent != nullptr)
   {
+    std::cout << "has parent" << std::endl;
     child->_parent->removeChild(child);
   }
   // Set the current entity as the parent of the child.
@@ -64,11 +64,11 @@ void Entity::removeTexture()
     UnloadTexture(this->_texture);
 }
 
-void Entity::addTexture(std::string filePath)
+void Entity::addTexture(char *filePath)
 {
   removeTexture();
-  if (IsPathFile(filePath.c_str()))
-    this->_texture = LoadTexture(filePath.c_str());
+  if (IsPathFile(filePath))
+    this->_texture = LoadTexture(filePath);
 }
 
 void Entity::setTextureColor(Color c)

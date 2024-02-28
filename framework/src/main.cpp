@@ -21,15 +21,18 @@
  */
 
 #include <bubbleshooter.h>
+#include <core.h>
 
 int main(void)
 {
+    Core *core = new Core();
+
     Bubbleshooter *scene = new Bubbleshooter(SCREEN_WIDTH, SCREEN_HEIGHT, "Bubble Shooter");
     scene->toggleDrawFPS();
 
     while (scene->isActive())
     {
-        scene->tick(GetFrameTime());
+        core->run(scene);
     }
 
     return 0;

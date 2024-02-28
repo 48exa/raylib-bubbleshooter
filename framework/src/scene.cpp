@@ -1,14 +1,14 @@
 #include <scene.h>
 
-Scene::Scene(uint16_t width, uint16_t height, std::string title) : Entity()
+Scene::Scene(uint16_t width, uint16_t height, char *title) : Entity()
 {
   assert(!GetWindowHandle());
-  InitWindow(width, height, title.c_str());
+  InitWindow(width, height, title);
 
-  _shouldDrawFPS = false;
-  _shouldUseVsync = true;
+  settings.drawfps = false;
+  settings.vsync = true;
 
-  if (_shouldUseVsync)
+  if (settings.vsync)
     SetTargetFPS(GetMonitorRefreshRate(0));
 
   t = new Timer();
@@ -36,8 +36,11 @@ void Scene::tick(float deltaTime)
 void Scene::draw()
 {
   ClearBackground(BLACK);
-  if (_shouldDrawFPS)
+  if (settings.drawfps)
+  {
     DrawFPS(10, 10);
+  }
+
   for (Entity *child : this->children())
   {
     DrawTexture(child->texture(), child->position.x, child->position.y, child->color());
@@ -46,8 +49,8 @@ void Scene::draw()
 
 void Scene::toggleVsync()
 {
-  this->_shouldUseVsync = !this->_shouldUseVsync;
-  if (_shouldUseVsync)
+  settings.vsync = !settings.vsync;
+  if (settings.vsync)
     SetWindowState(FLAG_VSYNC_HINT);
   else
     SetTargetFPS(32767); // Arbitrary FPS limit set to the 16 bit signed integer limit
