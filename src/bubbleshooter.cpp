@@ -11,17 +11,19 @@ Bubbleshooter::Bubbleshooter(uint16_t width, uint16_t height, std::string title)
   entity->position.y = SCREEN_HEIGHT / 2;
   entity->setTextureColor(WHITE);
 
-  // this->addChild(entity); // broken, dk why
+  this->addChild(entity); // idk why but this is really wonky
 }
 
 Bubbleshooter::~Bubbleshooter()
 {
+  for (Entity *child : this->children())
+  {
+    this->removeChild(child);
+  }
 }
 
 void Bubbleshooter::update(float deltaTime)
 {
-  // DrawText("Bubble shoot", 10, 30, 40, WHITE);
-  DrawTexture(entity->texture(), entity->position.x, entity->position.y, entity->color());
 
   if (IsKeyDown(KEY_W))
   {

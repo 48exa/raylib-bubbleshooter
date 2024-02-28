@@ -23,8 +23,7 @@ void Entity::update(float deltaTime)
 
 void Entity::addChild(Entity *child)
 {
-  // Check if the child already has a parent.
-  // If so, remove the child from its current parent.
+  child->_parent = nullptr;
   if (child->_parent != nullptr)
   {
     child->_parent->removeChild(child);
@@ -33,6 +32,8 @@ void Entity::addChild(Entity *child)
   child->_parent = this;
   // Add the child to the list of children of the current entity.
   this->_children.push_back(child);
+
+  std::cout << "added entity" << std::endl;
 }
 
 void Entity::removeChild(Entity *child)

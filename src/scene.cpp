@@ -23,7 +23,6 @@ Scene::~Scene()
 
 void Scene::update(float deltaTime)
 {
-  
 }
 
 void Scene::tick(float deltaTime)
@@ -39,6 +38,10 @@ void Scene::draw()
   ClearBackground(BLACK);
   if (_shouldDrawFPS)
     DrawFPS(10, 10);
+  for (Entity *child : this->children())
+  {
+    DrawTexture(child->texture(), child->position.x, child->position.y, child->color());
+  }
 }
 
 void Scene::toggleVsync()

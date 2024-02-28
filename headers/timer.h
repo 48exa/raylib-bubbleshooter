@@ -28,6 +28,7 @@ public:
   /// @brief The number of seconds passed since the Timer started
   /// @return double time in seconds
   double getSeconds();
+  void restart() { start(); };
 
 private:
   /// @brief When we started

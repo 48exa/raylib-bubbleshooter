@@ -71,7 +71,7 @@ protected:
   Vector3 _worldposition;
 
 private:
-  /// @brief Texture of an Entity
+    /// @brief Texture of an Entity
   Texture2D _texture;
   Color _textureColor;
   /// @brief Vector containing all the children of an Entity
