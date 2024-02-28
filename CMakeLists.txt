@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION  3.5)
-project(main C CXX)
+project(bubbleshooter C CXX)
 
 set(CMAKE_CXX_STANDARD  11)
 
@@ -19,13 +19,13 @@ set(WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 file(GLOB SOURCES "src/*.cpp")
 
 # Now we add all the source files to the project
-add_executable(Bubbleshoot ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Now set the include directories for Bubbleshoot
-target_include_directories(Bubbleshoot PUBLIC ${WORKING_DIRECTORY}/headers)
+target_include_directories(${PROJECT_NAME} PUBLIC ${WORKING_DIRECTORY}/headers)
 
 # Link raylib to your executable
-target_link_libraries(Bubbleshoot PRIVATE raylib)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
 # Copy assets to the binary directory
 file(
