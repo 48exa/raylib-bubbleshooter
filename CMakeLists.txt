@@ -15,14 +15,11 @@ add_subdirectory(libs/raylib)
 # Define WORKING_DIRECTORY to the directory containing your headers
 set(WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
-# Add the executable target before setting include directories
-add_executable(Bubbleshoot  
-  src/main.cpp
-  src/entity.cpp
-  src/scene.cpp
-  src/timer.cpp
-  src/bubbleshooter.cpp
-)
+# Get all .cpp files from the source folder
+file(GLOB SOURCES "src/*.cpp")
+
+# Now we add all the source files to the project
+add_executable(Bubbleshoot ${SOURCES})
 
 # Now set the include directories for Bubbleshoot
 target_include_directories(Bubbleshoot PUBLIC ${WORKING_DIRECTORY}/headers)
