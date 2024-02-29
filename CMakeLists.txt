@@ -10,15 +10,20 @@ set(BUILD_GAMES    OFF CACHE BOOL "" FORCE) # Disable building of games in depen
 
 add_subdirectory(libs/raylib) # Add raylib as a dependency from the libs directory
 
-# Define WORKING_DIRECTORY and get all .cpp files from the source folder
-set(WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}") # Set the working directory to the current source directory
-file(GLOB SOURCES "${WORKING_DIRECTORY}/framework/src/*.cpp" "${WORKING_DIRECTORY}/project/src/*.cpp") # Glob all .cpp files from specified directories into SOURCES variable
+# Define WORKING_DIRECTORY and get all .cpp files from the source folder and set the working directory to the current source directory
+set(WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
-# Create the executable and link libraries
-add_executable(${PROJECT_NAME} ${SOURCES}) # Create an executable with the project name and all the source files
+# Glob all .cpp files from specified directories into SOURCES variable
+file(GLOB SOURCES "${WORKING_DIRECTORY}/framework/src/*.cpp" "${WORKING_DIRECTORY}/project/src/*.cpp")
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${WORKING_DIRECTORY}/framework/headers ${WORKING_DIRECTORY}/project/headers) # Include directories for the project
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib) # Link the raylib library privately to the project
+# Create an executable with the project name and all the source files
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+# Include directories for the project
+target_include_directories(${PROJECT_NAME} PUBLIC ${WORKING_DIRECTORY}/framework/headers ${WORKING_DIRECTORY}/project/headers) 
+
+# Link the raylib library privately to the project
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
 
 # Copy assets to the binary directory
-file(COPY assets/ DESTINATION ${CMAKE_BINARY_DIR}) # Copy the assets folder to the binary directory
+file(COPY assets/ DESTINATION ${CMAKE_BINARY_DIR})
