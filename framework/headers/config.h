@@ -2,14 +2,15 @@
 #define CONFIG_H
 
 #include <iostream>
-#include <tuple>
 #include <raylib.h>
+
+typedef char* cstr;
 
 typedef struct
 {
   unsigned int width;
   unsigned int height;
-  char *title;
+  cstr title;
   bool vsync;
   bool drawfps;
   bool fullscreen;
