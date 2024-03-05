@@ -22,13 +22,22 @@
 
 #include <bubbleshooter.h>
 #include <core.h>
+#include <config.h>
 
 int main(void)
 {
     Core *core = new Core();
 
-    Bubbleshooter *scene = new Bubbleshooter(SCREEN_WIDTH, SCREEN_HEIGHT, "Bubble Shooter");
-    scene->toggleDrawFPS();
+    // core->settings = {1280, 720, "bubbleshooter", true, true};
+
+    core->settings.width = 1250;
+    core->settings.height = 1000;
+    core->settings.title = "Bubbleshooter";
+    core->settings.vsync = true;
+    core->settings.drawfps = true;
+    core->settings.fullscreen = true;
+
+    Bubbleshooter *scene = new Bubbleshooter(core->settings);
 
     while (scene->isActive())
     {

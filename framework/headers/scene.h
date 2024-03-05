@@ -14,9 +14,7 @@
 
 #include <entity.h>
 #include <timer.h>
-
-constexpr uint16_t SCREEN_HEIGHT = 720;
-constexpr uint16_t SCREEN_WIDTH = 1280;
+#include <config.h>
 
 class Scene : public Entity
 {
@@ -25,7 +23,7 @@ public:
   /// @param width Width of the screen in pixels.
   /// @param height Height of the screen in pixels.
   /// @param title Title of the screen
-  Scene(uint16_t width, uint16_t height, char *title);
+  Scene(WindowSettings s);
   /// @brief Deconstructor of a scene
   ~Scene();
 
@@ -49,16 +47,12 @@ public:
   /// @brief Wether the scene is active or not
   /// @return Wether the scene is active or not
   bool isActive() { return !WindowShouldClose(); };
+  WindowSettings settings;
 
 protected:
 private:
   Timer *t;
   /// @brief Wether or not the scene should draw FPS
-  struct
-  {
-    bool vsync;
-    bool drawfps;
-  } settings;
 };
 
 #endif

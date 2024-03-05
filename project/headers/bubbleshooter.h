@@ -15,11 +15,12 @@
 #include <scene.h>
 #include <timer.h>
 #include <bubble.h>
+#include <config.h>
 
 class Bubbleshooter : public Scene
 {
 public:
-  Bubbleshooter(uint16_t width, uint16_t height, char *title);
+  Bubbleshooter(WindowSettings settings);
   ~Bubbleshooter();
 
   virtual void update(float deltaTime);

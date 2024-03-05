@@ -1,16 +1,16 @@
 #include <bubbleshooter.h>
+#include <config.h>
 
-Bubbleshooter::Bubbleshooter(uint16_t width, uint16_t height, char *title)
-    : Scene(width, height, title)
+Bubbleshooter::Bubbleshooter(WindowSettings settings) : Scene(settings)
 {
   t = new Timer();
   t->start();
 
   bubble = new Bubble();
 
-  bubble->addTexture("../assets/dev.png");
-  bubble->position.x = SCREEN_WIDTH / 2;
-  bubble->position.y = SCREEN_HEIGHT / 2;
+  bubble->addTexture("../../assets/bubble.png");
+  bubble->position.x = settings.width / 2.0f;
+  bubble->position.y = settings.height / 2.0f;
   bubble->setTextureColor(WHITE);
 
   this->addChild(bubble);
@@ -26,6 +26,30 @@ Bubbleshooter::~Bubbleshooter()
 
 void Bubbleshooter::update(float deltaTime)
 {
+
+  if (t->getSeconds() > 0.1f)
+  {
+    switch (rand() % 3)
+    {
+    case 0:
+      bubble->setTextureColor(BLUE);
+      t->restart();
+      break;
+    case 1:
+      bubble->setTextureColor(GREEN);
+      t->restart();
+      break;
+    case 2:
+      bubble->setTextureColor(RED);
+      t->restart();
+      break;
+    case 3:
+      bubble->setTextureColor(YELLOW);
+      t->restart();
+      break;
+    }
+  }
+
   if (IsKeyDown(KEY_W))
   {
     bubble->position.y -= 750 * deltaTime;
@@ -51,12 +75,12 @@ void Bubbleshooter::update(float deltaTime)
   {
     bubble->position.y = 0;
   }
-  if (bubble->position.x + bubble->size().x > SCREEN_WIDTH)
+  if (bubble->position.x + bubble->size().x > settings.width)
   {
-    bubble->position.x = SCREEN_WIDTH - bubble->size().x;
+    bubble->position.x = settings.width - bubble->size().x;
   }
-  if (bubble->position.y + bubble->size().y > SCREEN_HEIGHT)
+  if (bubble->position.y + bubble->size().y > settings.height)
   {
-    bubble->position.y = SCREEN_HEIGHT - bubble->size().y;
+    bubble->position.y = settings.height - bubble->size().y;
   }
 }

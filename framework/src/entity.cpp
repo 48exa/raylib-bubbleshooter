@@ -4,8 +4,7 @@ int Entity::_nextGuid = 0;
 
 Entity::Entity()
 {
-  _guid = _nextGuid;
-  _nextGuid++;
+  _guid = _nextGuid++;
 
   _parent = nullptr;
 

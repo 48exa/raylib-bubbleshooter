@@ -16,7 +16,6 @@
 #include <iostream>
 #include <assert.h>
 #include <vector>
-#define BACKGROUND_COLOR (BLACK)
 
 class Entity
 {

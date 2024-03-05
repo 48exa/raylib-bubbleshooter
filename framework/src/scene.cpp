@@ -1,15 +1,17 @@
 #include <scene.h>
+#include <config.h>
 
-Scene::Scene(uint16_t width, uint16_t height, char *title) : Entity()
+Scene::Scene(WindowSettings s) : Entity()
 {
+  this->settings = s;
   assert(!GetWindowHandle());
-  InitWindow(width, height, title);
-
-  settings.drawfps = false;
-  settings.vsync = true;
+  InitWindow(settings.width, settings.height, settings.title);
 
   if (settings.vsync)
-    SetTargetFPS(GetMonitorRefreshRate(0));
+    SetWindowState(FLAG_VSYNC_HINT);
+
+  if (settings.fullscreen)
+    SetWindowState(FLAG_FULLSCREEN_MODE);
 
   t = new Timer();
   t->start();
@@ -19,10 +21,6 @@ Scene::~Scene()
 {
   assert(GetWindowHandle());
   CloseWindow();
-}
-
-void Scene::update(float deltaTime)
-{
 }
 
 void Scene::tick(float deltaTime)
@@ -35,7 +33,7 @@ void Scene::tick(float deltaTime)
 
 void Scene::draw()
 {
-  ClearBackground(BLACK);
+  ClearBackground(GRAY);
   if (settings.drawfps)
   {
     DrawFPS(10, 10);

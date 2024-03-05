@@ -3,6 +3,7 @@
 
 #include <raylib.h>
 #include <scene.h>
+#include <config.h>
 
 class Core
 {
@@ -11,6 +12,8 @@ public:
   ~Core();
 
   void run(Scene *scene);
+
+  WindowSettings settings;
 
 protected:
   float deltaTime;
