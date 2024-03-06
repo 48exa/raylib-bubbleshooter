@@ -27,6 +27,9 @@ public:
   virtual void update(float deltaTime);
 
 private:
+  float calculateAngle();
+  Vector2 bubbleSpawnLocation;
+  Vector2 destination;
   Bubble *bubble;
   Timer *t;
 };

@@ -64,6 +64,7 @@ public:
 
   /// @brief Position vector for an Entity
   Vector3 position;
+  Vector3 rotation;
 
 protected:
   /// @brief Original position of Entity, not relative to the parent

@@ -1,6 +1,6 @@
 #include <scene.h>
 #include <config.h>
-#include <additional.h>
+#include <helpers.h>
 
 Scene::Scene(WindowSettings s) : Entity()
 {
@@ -10,10 +10,10 @@ Scene::Scene(WindowSettings s) : Entity()
 
   camera->zoom = settings.zoom;
 
-  assert(!GetWindowHandle());
-  InitWindow((int)settings.dimensions.x, (int)settings.dimensions.y, settings.title);
-
   Config::init_settings(settings);
+
+  assert(!GetWindowHandle());
+  InitWindow((int)settings.size.x, (int)settings.size.y, settings.title);
 
   t = new Timer();
   t->start();
@@ -39,9 +39,14 @@ void Scene::tick(float deltaTime)
 
 void Scene::draw()
 {
-  ClearBackground(BLACK);
+  ClearBackground(settings.color);
   if (settings.drawfps)
-    Additional::DrawFPSPro(10, 10, 30, WHITE, settings.zoom);
+  {
+    char title[255];
+    strcpy(title, "Bubbleshooter | FPS: ");
+    strcat(title, Helpers::int2char(GetFPS()));
+    SetWindowTitle(title);
+  }
 
   for (Entity *child : this->children())
   {

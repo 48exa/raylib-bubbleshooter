@@ -9,6 +9,7 @@ Entity::Entity()
   _parent = nullptr;
 
   position = {0.0f, 0.0f, 0.0f};
+  rotation = {0.0f, 0.0f, 0.0f};
 }
 
 Entity::~Entity()

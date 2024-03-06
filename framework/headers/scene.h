@@ -15,6 +15,7 @@
 #include <entity.h>
 #include <timer.h>
 #include <config.h>
+#include <cstring>
 
 class Scene : public Entity
 {
@@ -52,10 +53,10 @@ public:
     return Vector2{(float)GetMouseX(), (float)GetMouseY()};
   };
   WindowSettings settings;
+  Camera2D *camera;
 
 protected:
 private:
-  Camera2D *camera;
   Timer *t;
   /// @brief Wether or not the scene should draw FPS
 };

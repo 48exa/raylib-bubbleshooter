@@ -30,15 +30,18 @@ int main(void)
 
     // core->settings = {1280, 720, "bubbleshooter", true, true};
 
-    core->settings.dimensions = {800, 600};
+    core->settings.size = {1200, 700};
     core->settings.title = "Bubbleshooter";
+    core->settings.color = {192, 192, 255, 255};
     core->settings.vsync = true;
     core->settings.drawfps = true;
     core->settings.fullscreen = false;
     core->settings.resizable = false;
     core->settings.MSAA = true;
-    core->settings.windowDecorated = true;
+    core->settings.window_decorated = true;
     core->settings.zoom = 0.5f;
+    core->settings.size_scaled = {core->settings.size.x / core->settings.zoom, core->settings.size.y / core->settings.zoom};
+    core->settings.game_size = {816 / core->settings.zoom, 616 / core->settings.zoom};
 
     Bubbleshooter *scene = new Bubbleshooter(core->settings);
 
