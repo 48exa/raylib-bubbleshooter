@@ -9,8 +9,8 @@ Bubbleshooter::Bubbleshooter(WindowSettings settings) : Scene(settings)
   bubble = new Bubble();
 
   bubble->addTexture("../../assets/bubble.png");
-  bubble->position.x = settings.width / 2.0f;
-  bubble->position.y = settings.height / 2.0f;
+  bubble->position.x = settings.dimensions.width / 2.0f;
+  bubble->position.y = settings.dimensions.height / 2.0f;
   bubble->setTextureColor(WHITE);
 
   this->addChild(bubble);
@@ -26,6 +26,11 @@ Bubbleshooter::~Bubbleshooter()
 
 void Bubbleshooter::update(float deltaTime)
 {
+
+  if (IsKeyPressed(KEY_Q))
+  {
+    this->toggleVsync();
+  }
 
   if (t->getSeconds() > 0.1f)
   {
@@ -75,12 +80,12 @@ void Bubbleshooter::update(float deltaTime)
   {
     bubble->position.y = 0;
   }
-  if (bubble->position.x + bubble->size().x > settings.width)
+  if (bubble->position.x + bubble->size().x > settings.dimensions.width)
   {
-    bubble->position.x = settings.width - bubble->size().x;
+    bubble->position.x = settings.dimensions.width - bubble->size().x;
   }
-  if (bubble->position.y + bubble->size().y > settings.height)
+  if (bubble->position.y + bubble->size().y > settings.dimensions.height)
   {
-    bubble->position.y = settings.height - bubble->size().y;
+    bubble->position.y = settings.dimensions.height - bubble->size().y;
   }
 }

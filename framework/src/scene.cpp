@@ -5,10 +5,19 @@ Scene::Scene(WindowSettings s) : Entity()
 {
   this->settings = s;
   assert(!GetWindowHandle());
-  InitWindow(settings.width, settings.height, settings.title);
+  InitWindow(settings.dimensions.width, settings.dimensions.height, settings.title);
 
   if (settings.vsync)
     SetWindowState(FLAG_VSYNC_HINT);
+
+  if (settings.resizable)
+    SetWindowState(FLAG_WINDOW_RESIZABLE);
+
+  if (settings.MSAA)
+    SetWindowState(FLAG_MSAA_4X_HINT);
+
+  if (!settings.windowDecorated)
+    SetWindowState(FLAG_WINDOW_UNDECORATED);
 
   if (settings.fullscreen)
     SetWindowState(FLAG_FULLSCREEN_MODE);
@@ -33,7 +42,7 @@ void Scene::tick(float deltaTime)
 
 void Scene::draw()
 {
-  ClearBackground(GRAY);
+  ClearBackground(BLACK);
   if (settings.drawfps)
   {
     DrawFPS(10, 10);
@@ -51,5 +60,8 @@ void Scene::toggleVsync()
   if (settings.vsync)
     SetWindowState(FLAG_VSYNC_HINT);
   else
+  {
+    ClearWindowState(FLAG_VSYNC_HINT);
     SetTargetFPS(32767); // Arbitrary FPS limit set to the 16 bit signed integer limit
+  }
 }
