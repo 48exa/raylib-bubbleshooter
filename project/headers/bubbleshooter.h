@@ -16,6 +16,7 @@
 #include <timer.h>
 #include <bubble.h>
 #include <config.h>
+#include <cmath>
 
 class Bubbleshooter : public Scene
 {
@@ -26,8 +27,8 @@ public:
   virtual void update(float deltaTime);
 
 private:
-  Timer *t;
   Bubble *bubble;
+  Timer *t;
 };
 
 #endif

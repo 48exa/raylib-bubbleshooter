@@ -1,19 +1,25 @@
 #include <bubbleshooter.h>
 #include <config.h>
+#include <additional.h>
 
 Bubbleshooter::Bubbleshooter(WindowSettings settings) : Scene(settings)
 {
   t = new Timer();
   t->start();
 
-  bubble = new Bubble();
-
-  bubble->addTexture("../../assets/bubble.png");
-  bubble->position.x = settings.dimensions.width / 2.0f;
-  bubble->position.y = settings.dimensions.height / 2.0f;
-  bubble->setTextureColor(WHITE);
-
+  bubble = new Bubble((settings.dimensions.x / 2) / settings.zoom, (settings.dimensions.y / settings.zoom) - 64);
   this->addChild(bubble);
+
+  for (int y = 0; y < (settings.dimensions.y / 2) / settings.zoom; y += 65)
+  {
+    for (int x = 8; x < (settings.dimensions.x - 32) / settings.zoom; x += 65)
+    {
+      if (y % 130 == 0)
+        this->addChild(new Bubble(x + 32, y, Additional::genRandomColor()));
+      else
+        this->addChild(new Bubble(x, y, Additional::genRandomColor()));
+    }
+  }
 }
 
 Bubbleshooter::~Bubbleshooter()
@@ -26,66 +32,30 @@ Bubbleshooter::~Bubbleshooter()
 
 void Bubbleshooter::update(float deltaTime)
 {
+  if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+  {
+    Vector2 m = {getMouse().x / settings.zoom, getMouse().y / settings.zoom};
+    Vector2 player = {bubble->position.x + bubble->texture().width / 2, bubble->position.y + bubble->texture().height / 2};
+
+    float deltaX = player.x - m.x;
+    float deltaY = player.y - m.y;
+
+    float angleInRadians = atan2(deltaY, deltaX);
+
+    // Convert the angle to degrees
+    float angleInDegrees = angleInRadians * 180 / PI;
+
+    // Adjust the angle to be between 0 and 360 degrees
+    if (angleInDegrees < 0)
+    {
+      angleInDegrees += 360;
+    }
+
+    DrawLineEx(m, player, 2, WHITE);
+  }
 
   if (IsKeyPressed(KEY_Q))
   {
     this->toggleVsync();
-  }
-
-  if (t->getSeconds() > 0.1f)
-  {
-    switch (rand() % 3)
-    {
-    case 0:
-      bubble->setTextureColor(BLUE);
-      t->restart();
-      break;
-    case 1:
-      bubble->setTextureColor(GREEN);
-      t->restart();
-      break;
-    case 2:
-      bubble->setTextureColor(RED);
-      t->restart();
-      break;
-    case 3:
-      bubble->setTextureColor(YELLOW);
-      t->restart();
-      break;
-    }
-  }
-
-  if (IsKeyDown(KEY_W))
-  {
-    bubble->position.y -= 750 * deltaTime;
-  }
-  if (IsKeyDown(KEY_A))
-  {
-    bubble->position.x -= 750 * deltaTime;
-  }
-  if (IsKeyDown(KEY_S))
-  {
-    bubble->position.y += 750 * deltaTime;
-  }
-  if (IsKeyDown(KEY_D))
-  {
-    bubble->position.x += 750 * deltaTime;
-  }
-
-  if (bubble->position.x < 0)
-  {
-    bubble->position.x = 0;
-  }
-  if (bubble->position.y < 0)
-  {
-    bubble->position.y = 0;
-  }
-  if (bubble->position.x + bubble->size().x > settings.dimensions.width)
-  {
-    bubble->position.x = settings.dimensions.width - bubble->size().x;
-  }
-  if (bubble->position.y + bubble->size().y > settings.dimensions.height)
-  {
-    bubble->position.y = settings.dimensions.height - bubble->size().y;
   }
 }

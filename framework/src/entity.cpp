@@ -63,11 +63,16 @@ void Entity::removeTexture()
     UnloadTexture(this->_texture);
 }
 
-void Entity::addTexture(char *filePath)
+void Entity::addTexture(const char *filePath)
 {
   removeTexture();
   if (IsPathFile(filePath))
     this->_texture = LoadTexture(filePath);
+}
+
+void Entity::addTextureFromImage(Image image)
+{
+  this->_texture = LoadTextureFromImage(image);
 }
 
 void Entity::setTextureColor(Color c)

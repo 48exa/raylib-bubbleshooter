@@ -42,7 +42,7 @@ public:
   /// @brief Add a texture to an Entity
   /// @param filePath string of local path to the texture
   /// @return void
-  void addTexture(char *filePath);
+  void addTexture(const char *filePath);
   /// @brief Remove the texture from an Entity
   /// @return void
   void removeTexture();
@@ -60,6 +60,7 @@ public:
   Texture2D texture() { return _texture; };
   Color color() { return _textureColor; };
   Vector2 size() { return Vector2{(float)_texture.width, (float)_texture.height}; };
+  void addTextureFromImage(Image image);
 
   /// @brief Position vector for an Entity
   Vector3 position;

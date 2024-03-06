@@ -30,7 +30,7 @@ int main(void)
 
     // core->settings = {1280, 720, "bubbleshooter", true, true};
 
-    core->settings.dimensions = {1250, 1000};
+    core->settings.dimensions = {800, 600};
     core->settings.title = "Bubbleshooter";
     core->settings.vsync = true;
     core->settings.drawfps = true;
@@ -38,6 +38,7 @@ int main(void)
     core->settings.resizable = false;
     core->settings.MSAA = true;
     core->settings.windowDecorated = true;
+    core->settings.zoom = 0.5f;
 
     Bubbleshooter *scene = new Bubbleshooter(core->settings);
 

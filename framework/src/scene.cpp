@@ -1,26 +1,19 @@
 #include <scene.h>
 #include <config.h>
+#include <additional.h>
 
 Scene::Scene(WindowSettings s) : Entity()
 {
   this->settings = s;
+
+  camera = new Camera2D();
+
+  camera->zoom = settings.zoom;
+
   assert(!GetWindowHandle());
-  InitWindow(settings.dimensions.width, settings.dimensions.height, settings.title);
+  InitWindow((int)settings.dimensions.x, (int)settings.dimensions.y, settings.title);
 
-  if (settings.vsync)
-    SetWindowState(FLAG_VSYNC_HINT);
-
-  if (settings.resizable)
-    SetWindowState(FLAG_WINDOW_RESIZABLE);
-
-  if (settings.MSAA)
-    SetWindowState(FLAG_MSAA_4X_HINT);
-
-  if (!settings.windowDecorated)
-    SetWindowState(FLAG_WINDOW_UNDECORATED);
-
-  if (settings.fullscreen)
-    SetWindowState(FLAG_FULLSCREEN_MODE);
+  Config::init_settings(settings);
 
   t = new Timer();
   t->start();
@@ -35,8 +28,12 @@ Scene::~Scene()
 void Scene::tick(float deltaTime)
 {
   BeginDrawing();
+  BeginMode2D(*camera);
+
   update(deltaTime);
   draw();
+
+  EndMode2D();
   EndDrawing();
 }
 
@@ -44,9 +41,7 @@ void Scene::draw()
 {
   ClearBackground(BLACK);
   if (settings.drawfps)
-  {
-    DrawFPS(10, 10);
-  }
+    Additional::DrawFPSPro(10, 10, 30, WHITE, settings.zoom);
 
   for (Entity *child : this->children())
   {

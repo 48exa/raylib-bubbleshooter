@@ -4,19 +4,10 @@
 #include <iostream>
 #include <raylib.h>
 
-typedef char *cstr;
-
-/// @brief Screen dimensions
-/// @param uint width
-/// @param uint height
-typedef struct Dimensions
-{
-  unsigned int width;
-  unsigned int height;
-} Dimensions;
+typedef const char *cstr;
 
 /// @brief Settings for the window
-/// @param Dimensions dimensions
+/// @param Vector2 dimensions
 /// @param cstr title
 /// @param bool vsync
 /// @param bool drawfps
@@ -24,9 +15,10 @@ typedef struct Dimensions
 /// @param bool resizable
 /// @param bool MSAA
 /// @param bool windowDecorated
+/// @param float zoom
 typedef struct WindowSettings
 {
-  Dimensions dimensions;
+  Vector2 dimensions;
   cstr title;
   bool vsync;
   bool drawfps;
@@ -34,7 +26,31 @@ typedef struct WindowSettings
   bool resizable;
   bool MSAA;
   bool windowDecorated;
-
+  float zoom;
 } WindowSettings;
+
+class Config
+{
+public:
+  Config() = delete;
+
+  static void init_settings(WindowSettings settings)
+  {
+    if (settings.vsync)
+      SetWindowState(FLAG_VSYNC_HINT);
+
+    if (settings.resizable)
+      SetWindowState(FLAG_WINDOW_RESIZABLE);
+
+    if (settings.MSAA)
+      SetWindowState(FLAG_MSAA_4X_HINT);
+
+    if (!settings.windowDecorated)
+      SetWindowState(FLAG_WINDOW_UNDECORATED);
+
+    if (settings.fullscreen)
+      SetWindowState(FLAG_FULLSCREEN_MODE);
+  }
+};
 
 #endif

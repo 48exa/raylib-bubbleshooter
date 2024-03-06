@@ -6,11 +6,12 @@
 class Bubble : public Entity
 {
 public:
-  Bubble();
+  Bubble(float posx, float posy, Color color = WHITE);
   ~Bubble();
   virtual void update(float deltaTime);
 
 private:
+  static Image texturebuf;
 };
 
 #endif

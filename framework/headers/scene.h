@@ -47,10 +47,15 @@ public:
   /// @brief Wether the scene is active or not
   /// @return Wether the scene is active or not
   bool isActive() { return !WindowShouldClose(); };
+  Vector2 getMouse()
+  {
+    return Vector2{(float)GetMouseX(), (float)GetMouseY()};
+  };
   WindowSettings settings;
 
 protected:
 private:
+  Camera2D *camera;
   Timer *t;
   /// @brief Wether or not the scene should draw FPS
 };
