@@ -9,27 +9,13 @@ Bubbleshooter::Bubbleshooter(WindowSettings s) : Scene(s)
 
   bubbles = std::vector<Bubble *>();
 
-  bubbleSpawnLocation = {settings.game_size.x / 2, settings.game_size.y - 64};
+  bubbleSpawnLocation = {settings.game_size.x / 2, settings.game_size.y - BUBBLE_SPAWN_Y_OFFSET};
 
-  camera->offset = {25, 25};
+  camera->offset = {CAMERA_OFFSET, CAMERA_OFFSET};
 
   bubble = nullptr;
 
-  for (int y = 32; y < 600 / settings.zoom / 2; y += 65)
-  {
-    for (int x = 38; x < 800 / settings.zoom - 59; x += 65)
-    {
-      if ((y - 32) % 130 == 0)
-        bubbles.push_back(new Bubble(x + 32, y, Helpers::genRandomColor()));
-      else
-        bubbles.push_back(new Bubble(x, y, Helpers::genRandomColor()));
-    }
-  }
-
-  for (auto bubble : bubbles)
-  {
-    this->addChild(bubble);
-  }
+  initlevel();
 }
 
 Bubbleshooter::~Bubbleshooter()
@@ -42,10 +28,7 @@ Bubbleshooter::~Bubbleshooter()
 
 void Bubbleshooter::update(float deltaTime)
 {
-  // TODO: jesus clean this up
-  DrawRectangle(-12, -16, settings.game_size.x, settings.game_size.y, {198, 198, 255, 255});
-  DrawRectangleLinesEx({-12, -16, settings.game_size.x, settings.game_size.y}, 10, {230, 230, 255, 255});
-  DrawCircleLines(bubbleSpawnLocation.x, bubbleSpawnLocation.y, 32, WHITE);
+  drawGameLayout();
 
   if (IsKeyPressed(KEY_Q))
   {
@@ -54,21 +37,10 @@ void Bubbleshooter::update(float deltaTime)
 
   if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
   {
-    if (bubble != nullptr)
+    bool bubbleCreated;
+    shootBubble(bubbleCreated);
+    if (bubbleCreated)
       return;
-
-    bubble = new Bubble(bubbleSpawnLocation.x, bubbleSpawnLocation.y, Helpers::genRandomColor());
-    this->addChild(bubble);
-
-    bubble->destination = {GetMouseX() / settings.zoom, GetMouseY() / settings.zoom};
-    bubble->origin = {bubbleSpawnLocation.x, bubbleSpawnLocation.y};
-    bubble->direction = {bubble->destination.x - bubble->origin.x, bubble->destination.y - bubble->origin.y};
-
-    float magnitude = sqrt(bubble->direction.x * bubble->direction.x + bubble->direction.y * bubble->direction.y);
-    bubble->direction.x /= magnitude;
-    bubble->direction.y /= magnitude;
-
-    bubble->shouldMove = !bubble->shouldMove;
   }
 
   if (bubble == nullptr)
@@ -79,14 +51,67 @@ void Bubbleshooter::update(float deltaTime)
 
   if (bubble->position.x - 32 < 0 || bubble->position.x > settings.game_size.x - 64)
   {
-    bubble->direction.x *= -1;
+    bubble->bounce();
   }
 
-  if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+  if (outOfBounds())
+    deleteBubble();
+}
+
+void Bubbleshooter::initlevel()
+{
+  bool visible = true;
+  for (int y = Y_OFFSET; y < Y_THRESHOLD / settings.zoom; y += Y_INCREMENT)
   {
-    bubble->shouldMove = false;
-    removeChild(bubble);
-    bubble = nullptr;
-    delete bubble;
+    for (int x = X_OFFSET; x < X_THRESHOLD / settings.zoom - X_EXTRA_OFFSET; x += X_INCREMENT)
+    {
+      if (y > (Y_THRESHOLD / settings.zoom) / 2)
+        visible = false;
+      if ((y - Y_OFFSET) % Y_EXTRA_OFFSET == 0)
+        addChild(new Bubble(x + X_EXTRA_OFFSET, y, visible, Helpers::genRandomColor()));
+      else
+        addChild(new Bubble(x, y, visible, Helpers::genRandomColor()));
+    }
   }
+}
+
+void Bubbleshooter::deleteBubble()
+{
+  bubble->shouldMove = false;
+  removeChild(bubble);
+  bubble = nullptr;
+  delete bubble;
+}
+
+bool Bubbleshooter::outOfBounds()
+{
+  return IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) || bubble->position.y < 0 || bubble->position.y > settings.game_size.y;
+}
+
+void Bubbleshooter::shootBubble(bool &bubbleCreated)
+{
+  bubbleCreated = true;
+  if (bubble != nullptr)
+    return;
+
+  bubble = new Bubble(bubbleSpawnLocation.x, bubbleSpawnLocation.y, true, Helpers::genRandomColor());
+  this->addChild(bubble);
+
+  bubble->destination = {GetMouseX() / settings.zoom, GetMouseY() / settings.zoom};
+  bubble->origin = {bubbleSpawnLocation.x, bubbleSpawnLocation.y};
+  bubble->direction = {bubble->destination.x - bubble->origin.x, bubble->destination.y - bubble->origin.y};
+
+  float magnitude = sqrt(bubble->direction.x * bubble->direction.x + bubble->direction.y * bubble->direction.y);
+  bubble->direction.x /= magnitude;
+  bubble->direction.y /= magnitude;
+
+  bubble->shouldMove = !bubble->shouldMove;
+  bubbleCreated = false;
+}
+
+void Bubbleshooter::drawGameLayout()
+{
+  DrawRectangle(GAME_SCREEN_OFFSET_X, GAME_SCREEN_OFFSET_Y, settings.game_size.x, settings.game_size.y, GAME_SCREEN_COLOR);
+  DrawRectangleLinesEx({GAME_SCREEN_OFFSET_X, GAME_SCREEN_OFFSET_Y, settings.game_size.x, settings.game_size.y}, GAME_BORDER_THICKNESS, GAME_SCREEN_BORDER_COLOR);
+  DrawCircleLines(bubbleSpawnLocation.x, bubbleSpawnLocation.y, BUBBLE_SIZE, WHITE);
 }

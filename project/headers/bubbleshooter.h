@@ -22,9 +22,20 @@ class Bubbleshooter : public Scene
 {
 public:
   Bubbleshooter(WindowSettings settings);
+  void initlevel();
   ~Bubbleshooter();
 
   virtual void update(float deltaTime);
+
+  bool NewFunction();
+
+  void deleteBubble();
+
+  bool outOfBounds();
+
+  void shootBubble(bool &retFlag);
+
+  void drawGameLayout();
 
 private:
   Vector2 bubbleSpawnLocation;

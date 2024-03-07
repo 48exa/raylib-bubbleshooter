@@ -4,7 +4,26 @@
 #include <iostream>
 #include <raylib.h>
 
+#define BUBBLE_SIZE 32
+#define BUBBLE_SPAWN_Y_OFFSET 64
+#define CAMERA_OFFSET 25
+#define Y_INCREMENT 65
+#define X_INCREMENT 65
+#define Y_THRESHOLD 600
+#define X_THRESHOLD 800
+#define Y_OFFSET 32
+#define X_OFFSET 38
+#define X_EXTRA_OFFSET 32
+#define Y_EXTRA_OFFSET 130
+
+#define GAME_SCREEN_COLOR {198, 198, 255, 255}
+#define GAME_SCREEN_BORDER_COLOR {230, 230, 255, 255}
+#define GAME_SCREEN_OFFSET_X -12
+#define GAME_SCREEN_OFFSET_Y -16
+#define GAME_BORDER_THICKNESS 10
+
 typedef const char *cstr;
+
 
 /// @brief Settings for the window
 /// @param Vector2 size
