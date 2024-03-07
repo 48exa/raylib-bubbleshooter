@@ -10,15 +10,13 @@ Entity::Entity()
 
   position = {0.0f, 0.0f, 0.0f};
   rotation = {0.0f, 0.0f, 0.0f};
+
+  _texture = {0};
 }
 
 Entity::~Entity()
 {
   removeTexture();
-}
-
-void Entity::update(float deltaTime)
-{
 }
 
 void Entity::addChild(Entity *child)
@@ -33,7 +31,8 @@ void Entity::addChild(Entity *child)
   // Add the child to the list of children of the current entity.
   this->_children.push_back(child);
 
-  std::cout << "added entity" << std::endl;
+  std::cout << "Added entity with GUID: " << child->_guid
+            << " at position: (" << child->position.x << ", " << child->position.y << ", " << child->position.z << ")" << std::endl;
 }
 
 void Entity::removeChild(Entity *child)

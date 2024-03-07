@@ -7,21 +7,28 @@ Bubbleshooter::Bubbleshooter(WindowSettings s) : Scene(s)
   t = new Timer();
   t->start();
 
-  bubbleSpawnLocation = {settings.game_size.x / 2 - 32, settings.game_size.y - 96};
+  bubbles = std::vector<Bubble *>();
+
+  bubbleSpawnLocation = {settings.game_size.x / 2, settings.game_size.y - 64};
 
   camera->offset = {25, 25};
 
   bubble = nullptr;
 
-  for (int y = 0; y < 600 / settings.zoom / 2; y += 65)
+  for (int y = 32; y < 600 / settings.zoom / 2; y += 65)
   {
-    for (int x = 8; x < 800 / settings.zoom - 64; x += 65)
+    for (int x = 38; x < 800 / settings.zoom - 59; x += 65)
     {
-      if (y % 130 == 0)
-        this->addChild(new Bubble(x + 32, y, Helpers::genRandomColor()));
+      if ((y - 32) % 130 == 0)
+        bubbles.push_back(new Bubble(x + 32, y, Helpers::genRandomColor()));
       else
-        this->addChild(new Bubble(x, y, Helpers::genRandomColor()));
+        bubbles.push_back(new Bubble(x, y, Helpers::genRandomColor()));
     }
+  }
+
+  for (auto bubble : bubbles)
+  {
+    this->addChild(bubble);
   }
 }
 
@@ -38,14 +45,7 @@ void Bubbleshooter::update(float deltaTime)
   // TODO: jesus clean this up
   DrawRectangle(-12, -16, settings.game_size.x, settings.game_size.y, {198, 198, 255, 255});
   DrawRectangleLinesEx({-12, -16, settings.game_size.x, settings.game_size.y}, 10, {230, 230, 255, 255});
-  DrawCircleLines(settings.game_size.x / 2, settings.game_size.y - 64, 32, WHITE);
-
-  // TODO: Clamp aimAngle so user can't shoot downwards
-  Vector2 m = {GetMouseX() / settings.zoom, GetMouseY() / settings.zoom};
-  Vector2 shooterPos = {bubbleSpawnLocation.x + 32, bubbleSpawnLocation.y + 32};
-  float angle = atan2(shooterPos.y - m.y, shooterPos.x - m.x);
-
-  // DrawLineV(lineStart, line, RED);
+  DrawCircleLines(bubbleSpawnLocation.x, bubbleSpawnLocation.y, 32, WHITE);
 
   if (IsKeyPressed(KEY_Q))
   {
@@ -60,10 +60,13 @@ void Bubbleshooter::update(float deltaTime)
     bubble = new Bubble(bubbleSpawnLocation.x, bubbleSpawnLocation.y, Helpers::genRandomColor());
     this->addChild(bubble);
 
-    Vector2 m = {GetMouseX() / settings.zoom, GetMouseY() / settings.zoom};
-    Vector2 shooterPos = {bubbleSpawnLocation.x + 32, bubbleSpawnLocation.y + 32};
+    bubble->destination = {GetMouseX() / settings.zoom, GetMouseY() / settings.zoom};
+    bubble->origin = {bubbleSpawnLocation.x, bubbleSpawnLocation.y};
+    bubble->direction = {bubble->destination.x - bubble->origin.x, bubble->destination.y - bubble->origin.y};
 
-    bubble->angleToMove = angle;
+    float magnitude = sqrt(bubble->direction.x * bubble->direction.x + bubble->direction.y * bubble->direction.y);
+    bubble->direction.x /= magnitude;
+    bubble->direction.y /= magnitude;
 
     bubble->shouldMove = !bubble->shouldMove;
   }
@@ -74,15 +77,16 @@ void Bubbleshooter::update(float deltaTime)
   if (!bubble->shouldMove)
     return;
 
-  bubble->move(bubble->angleToMove, deltaTime);
-  bubble->clamp(settings.game_size);
+  if (bubble->position.x - 32 < 0 || bubble->position.x > settings.game_size.x - 64)
+  {
+    bubble->direction.x *= -1;
+  }
 
-  if (bubble->outOfBounds(settings.game_size.y) || IsMouseButtonPressed(MOUSE_RIGHT_BUTTON))
+  if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
   {
     bubble->shouldMove = false;
-    this->removeChild(bubble);
+    removeChild(bubble);
+    bubble = nullptr;
     delete bubble;
-
-    this->bubble = nullptr;
   }
 }

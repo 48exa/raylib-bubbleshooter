@@ -31,13 +31,13 @@ void Scene::tick(float deltaTime)
   BeginMode2D(*camera);
 
   update(deltaTime);
-  draw();
+  draw(deltaTime);
 
   EndMode2D();
   EndDrawing();
 }
 
-void Scene::draw()
+void Scene::draw(float deltaTime)
 {
   ClearBackground(settings.color);
   if (settings.drawfps)
@@ -50,7 +50,9 @@ void Scene::draw()
 
   for (Entity *child : this->children())
   {
-    DrawTexture(child->texture(), child->position.x, child->position.y, child->color());
+    if (IsTextureReady(child->texture()))
+      DrawTexture(child->texture(), child->position.x, child->position.y, child->color());
+    child->update(deltaTime);
   }
 }
 

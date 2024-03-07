@@ -38,7 +38,7 @@ public:
   void tick(float deltaTime);
   /// @brief Clear the background and possibly draw the FPS
   /// @return void
-  void draw();
+  void draw(float deltaTime);
   /// @brief Toggle the drawing of the FPS
   /// @return void
   void toggleDrawFPS() { settings.drawfps = !settings.drawfps; };

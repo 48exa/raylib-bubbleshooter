@@ -11,19 +11,15 @@ public:
   ~Bubble();
   virtual void update(float deltaTime);
 
-  void move(float angle, float deltaTime);
-  void clamp(Vector2 limits);
-
   bool shouldMove;
-  float angleToMove;
-  bool outOfBounds(int upperBound);
+  Vector2 destination;
+  Vector2 origin;
+  Vector2 direction;
 
 protected:
   int speed;
 
 private:
-  static Image texturebuf;
-
   friend class Bubbleshooter;
 };
 
