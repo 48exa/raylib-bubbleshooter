@@ -23,6 +23,7 @@ Bubbleshooter::~Bubbleshooter()
   for (Entity *child : this->children())
   {
     this->removeChild(child);
+    delete child;
   }
 }
 
@@ -97,7 +98,7 @@ void Bubbleshooter::shootBubble(bool &bubbleCreated)
   bubble = new Bubble(bubbleSpawnLocation.x, bubbleSpawnLocation.y, true, Helpers::genRandomColor());
   this->addChild(bubble);
 
-  bubble->destination = {GetMouseX() / settings.zoom, GetMouseY() / settings.zoom};
+  bubble->destination = {GetMouseX() / settings.zoom - CAMERA_OFFSET, GetMouseY() / settings.zoom - CAMERA_OFFSET};
   bubble->origin = {bubbleSpawnLocation.x, bubbleSpawnLocation.y};
   bubble->direction = {bubble->destination.x - bubble->origin.x, bubble->destination.y - bubble->origin.y};
 
@@ -114,4 +115,15 @@ void Bubbleshooter::drawGameLayout()
   DrawRectangle(GAME_SCREEN_OFFSET_X, GAME_SCREEN_OFFSET_Y, settings.game_size.x, settings.game_size.y, GAME_SCREEN_COLOR);
   DrawRectangleLinesEx({GAME_SCREEN_OFFSET_X, GAME_SCREEN_OFFSET_Y, settings.game_size.x, settings.game_size.y}, GAME_BORDER_THICKNESS, GAME_SCREEN_BORDER_COLOR);
   DrawCircleLines(bubbleSpawnLocation.x, bubbleSpawnLocation.y, BUBBLE_SIZE, WHITE);
+
+  mousePosition = {GetMouseX() / settings.zoom - CAMERA_OFFSET, GetMouseY() / settings.zoom - CAMERA_OFFSET};
+  lineDirection = {mousePosition.x - bubbleSpawnLocation.x, mousePosition.y - bubbleSpawnLocation.y};
+
+  float magnitude = sqrt(lineDirection.x * lineDirection.x + lineDirection.y * lineDirection.y);
+  lineDirection.x /= magnitude;
+  lineDirection.y /= magnitude;
+
+  lineEnd = {bubbleSpawnLocation.x + lineDirection.x * AIMER_LENGTH, bubbleSpawnLocation.y + lineDirection.y * AIMER_LENGTH};
+
+  DrawLine(bubbleSpawnLocation.x, bubbleSpawnLocation.y, lineEnd.x, lineEnd.y, WHITE);
 }

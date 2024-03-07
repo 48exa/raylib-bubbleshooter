@@ -24,7 +24,6 @@ protected:
 
 private:
   friend class Bubbleshooter;
-  WindowSettings settings;
 };
 
 #endif

@@ -3,11 +3,10 @@
 Bubble::Bubble(float posx, float posy, bool vis, Color color) : Entity()
 {
   this->position = {posx, posy};
-  this->setTextureColor(color);
   this->speed = 1000;
   this->shouldMove = false;
   this->visible = vis;
-  settings = {0};
+  this->setTextureColor(color);
 }
 
 Bubble::~Bubble()
@@ -21,8 +20,8 @@ void Bubble::update(float deltaTime)
 
   if (shouldMove)
   {
-    this->position.x += this->direction.x * 1000 * deltaTime;
-    this->position.y += this->direction.y * 1000 * deltaTime;
+    this->position.x += this->direction.x * speed * deltaTime;
+    this->position.y += this->direction.y * speed * deltaTime;
   }
 }
 

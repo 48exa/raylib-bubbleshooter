@@ -27,18 +27,16 @@ public:
 
   virtual void update(float deltaTime);
 
-  bool NewFunction();
-
   void deleteBubble();
-
   bool outOfBounds();
-
   void shootBubble(bool &retFlag);
-
   void drawGameLayout();
 
 private:
   Vector2 bubbleSpawnLocation;
+  Vector2 mousePosition;
+  Vector2 lineDirection;
+  Vector2 lineEnd;
   Bubble *bubble;
   std::vector<Bubble *> bubbles;
   Timer *t;

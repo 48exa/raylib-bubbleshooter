@@ -16,40 +16,45 @@
 #define X_EXTRA_OFFSET 32
 #define Y_EXTRA_OFFSET 130
 
+#define AIMER_LENGTH 250
+
 #define GAME_SCREEN_COLOR {198, 198, 255, 255}
 #define GAME_SCREEN_BORDER_COLOR {230, 230, 255, 255}
 #define GAME_SCREEN_OFFSET_X -12
 #define GAME_SCREEN_OFFSET_Y -16
 #define GAME_BORDER_THICKNESS 10
 
+#define BUTTON_COLOR {205, 198, 255, 255}
+
 typedef const char *cstr;
 
+constexpr Vector2 SIZE = {1200, 700};
+constexpr cstr TITLE = "Bubbleshooter";
+constexpr Color COLOR = {192, 192, 255, 255};
+constexpr bool VSYNC = true;
+constexpr bool DRAWFPS = true;
+constexpr bool FULLSCREEN = false;
+constexpr bool RESIZABLE = false;
+constexpr bool MSAA = true;
+constexpr bool WINDOW_DECORATED = true;
+constexpr float ZOOM = 0.5f;
+constexpr Vector2 SIZE_SCALED = {SIZE.x / ZOOM, SIZE.y / ZOOM};
+constexpr Vector2 GAME_SIZE = {816 / ZOOM, 616 / ZOOM};
 
-/// @brief Settings for the window
-/// @param Vector2 size
-/// @param cstr title
-/// @param bool vsync
-/// @param bool drawfps
-/// @param bool fullscreen
-/// @param bool resizable
-/// @param bool MSAA
-/// @param bool window_decorated
-/// @param float zoom
-/// @param Vector2 game_size
 typedef struct WindowSettings
 {
-  Vector2 size;
-  Vector2 size_scaled;
-  Vector2 game_size;
-  cstr title;
-  Color color;
-  bool vsync;
-  bool drawfps;
-  bool fullscreen;
-  bool resizable;
-  bool MSAA;
-  bool window_decorated;
-  float zoom;
+  Vector2 size = SIZE;
+  Vector2 size_scaled = SIZE_SCALED;
+  Vector2 game_size = GAME_SIZE;
+  cstr title = TITLE;
+  Color color = COLOR;
+  bool vsync = VSYNC;
+  bool drawfps = DRAWFPS;
+  bool fullscreen = FULLSCREEN;
+  bool resizable = RESIZABLE;
+  bool MSAA = MSAA;
+  bool window_decorated = WINDOW_DECORATED;
+  float zoom = ZOOM;
 } WindowSettings;
 
 class Config
