@@ -1,46 +1,38 @@
-/**
- * @file timer.h
- *
- * @brief Header file of the Timer class
- *
- * This file is part of RLFWB, a RayLib Framework for Bubbleshooter
- *
- * - Copyright 2024 Douwe westerdijk <westerdijk@protonmail.com>
- *
- */
-
 #ifndef TIMER_H
 #define TIMER_H
 
 #include <raylib.h>
 #include <assert.h>
 
+/// @class Timer
+/// @brief A class for measuring time intervals.
 class Timer
 {
 public:
+  /// @brief Default constructor.
   Timer();
+
+  /// @brief Destructor.
   ~Timer();
 
-  /// @brief Start the Timer, also functions as reset
+  /// @brief Starts the timer.
   void start();
-  /// @brief Stop the Timer
+
+  /// @brief Stops the timer.
   void stop();
-  /// @brief The number of seconds passed since the Timer started
-  /// @return double time in seconds
+
+  /// @brief Gets the elapsed time in seconds.
+  /// @return The elapsed time in seconds.
   double getSeconds();
+
+  /// @brief Restarts the timer.
   void restart() { start(); };
 
 private:
-  /// @brief When we started
-  double _startTime;
-  /// @brief When we paused
-  double _pausedTicks;
-  /// @brief Started or not
-  bool _started;
-  ///< @brief Paused or not
-  bool _paused;
-
-private:
+  double _startTime;   ///< The start time of the timer.
+  double _pausedTicks; ///< The paused ticks of the timer.
+  bool _started;       ///< Flag indicating if the timer has started.
+  bool _paused;        ///< Flag indicating if the timer is paused.
 };
 
 #endif

@@ -30,10 +30,10 @@ int main(void)
 
     Bubbleshooter *scene = new Bubbleshooter(core->settings);
 
-    while (scene->isActive())
+    do
     {
         core->run(scene);
-    }
+    } while (scene->isActive());
 
     return 0;
 }

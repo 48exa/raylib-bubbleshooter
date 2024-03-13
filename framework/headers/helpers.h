@@ -6,9 +6,14 @@
 #include <charconv>
 #include <string>
 
+/// @class Helpers
+/// @brief A utility class that provides helper functions for various tasks.
 class Helpers
 {
 public:
+  /// @brief Converts an integer to a character array.
+  /// @param i The integer to be converted.
+  /// @return A dynamically allocated character array representing the integer.
   static char *int2char(int i)
   {
     size_t length = std::to_string(i).length();
@@ -19,11 +24,8 @@ public:
     return result;
   };
 
-  static void DrawFPSPro(int posx, int posy, int fontsize, Color color, float zoom = 1.0f)
-  {
-    DrawText(int2char(GetFPS()), posx, posy, fontsize / zoom, color);
-  };
-
+  /// @brief Generates a random color.
+  /// @return A randomly generated color.
   static Color genRandomColor()
   {
     switch (rand() % 5)

@@ -67,3 +67,9 @@ void Scene::toggleVsync()
     SetTargetFPS(32767); // Arbitrary FPS limit set to the 16 bit signed integer limit
   }
 }
+
+void Scene::crash(const char *msg)
+{
+  std::cerr << "FATAL ERROR: " << msg << std::endl;
+  CloseWindow();
+}

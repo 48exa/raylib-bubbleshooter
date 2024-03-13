@@ -1,14 +1,3 @@
-/**
- * @file entity.h
- *
- * @brief Header file of the Entity class
- *
- * This file is part of RLFWB, a RayLib Framework for Bubbleshooter
- *
- * - Copyright 2024 Douwe westerdijk <westerdijk@protonmail.com>
- *
- */
-
 #ifndef ENTITY_H
 #define ENTITY_H
 
@@ -17,71 +6,80 @@
 #include <assert.h>
 #include <vector>
 
+/// The base class for all entities in the game.
 class Entity
 {
 public:
-  /// @brief Constructor of Entity
+  /// Default constructor.
   Entity();
-  /// @brief Destructor of Entity
+
+  /// Virtual destructor.
   virtual ~Entity();
 
-  /// @brief Update the entity. This function is PURE VIRTUAL. You MUST implement it when extending from Entity.
-  /// @param deltaTime Time elapsed since last frame draw.
-  /// @return void
+  /// Updates the entity's state.
+  /// @param deltaTime The time elapsed since the last update.
   virtual void update(float deltaTime) = 0;
 
-  /// @brief Add an Entity as child to an Entity
-  /// @param child The Entity you are adding as child
-  /// @return void
+  /// Adds a child entity to this entity.
+  /// @param child The child entity to add.
   void addChild(Entity *child);
-  /// @brief Remove this Entity as a child
-  /// @param child Entity you are removing as child
-  /// @return void
+
+  /// Removes a child entity from this entity.
+  /// @param child The child entity to remove.
   void removeChild(Entity *child);
 
-  /// @brief Add a texture to an Entity
-  /// @param filePath string of local path to the texture
-  /// @return void
+  /// Adds a texture to the entity.
+  /// @param filePath The file path of the texture to add.
   void addTexture(const char *filePath);
-  /// @brief Remove the texture from an Entity
-  /// @return void
+
+  /// Removes the texture from the entity.
   void removeTexture();
-  /// @brief Getter for the parent of an Entity
-  /// @return Parent of an Entity
+
+  /// Gets the parent entity of this entity.
+  /// @return The parent entity.
   Entity *parent() { return _parent; };
+
+  /// Sets the color of the entity's texture.
+  /// @param c The color to set.
   void setTextureColor(Color c);
 
-  /// @brief Getter for the children of an Entity
-  /// @return std::vector<Entity> of the children of an Entity
+  /// Gets the children entities of this entity.
+  /// @return The children entities.
   const std::vector<Entity *> &children() { return _children; };
-  /// @brief Getter for the guid of an Entity
-  /// @return The guid of an Entity
+
+  /// Gets the globally unique identifier (GUID) of this entity.
+  /// @return The GUID.
   int guid() { return _guid; };
+
+  /// Gets the texture of the entity.
+  /// @return The texture.
   Texture2D texture() { return _texture; };
+
+  /// Gets the color of the entity's texture.
+  /// @return The texture color.
   Color color() { return _textureColor; };
+
+  /// Gets the size of the entity.
+  /// @return The size.
   Vector2 size() { return Vector2{(float)_texture.width, (float)_texture.height}; };
+
+  /// Adds a texture to the entity from an image.
+  /// @param image The image to add as a texture.
   void addTextureFromImage(Image image);
 
-  /// @brief Position vector for an Entity
-  Vector3 position;
-  Vector3 rotation;
+  Vector3 position; ///< The position of the entity in 3D space.
+  Vector3 rotation; ///< The rotation of the entity in 3D space.
 
 protected:
-  /// @brief Original position of Entity, not relative to the parent
-  Vector3 _worldposition;
+  Vector3 _worldposition; ///< The world position of the entity.
 
 private:
-  /// @brief Texture of an Entity
-  Texture2D _texture;
-  Color _textureColor;
-  /// @brief Vector containing all the children of an Entity
-  std::vector<Entity *> _children;
-  /// @brief The parent of an Entity
-  Entity *_parent;
-  /// @brief Custom ID that is different for every instance of an Entity
-  int _guid;
-  /// @brief Custom ID that isn't tied to an Entity yet
-  static int _nextGuid;
+  Texture2D _texture;              ///< The texture of the entity.
+  Color _textureColor;             ///< The color of the entity's texture.
+  std::vector<Entity *> _children; ///< The children entities of this entity.
+  Entity *_parent;                 ///< The parent entity of this entity.
+  int _guid;                       ///< The globally unique identifier (GUID) of this entity.
+  static int _nextGuid;            ///< The next available GUID for entities.
 };
 
 #endif

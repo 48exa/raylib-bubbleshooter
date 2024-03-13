@@ -1,14 +1,3 @@
-/**
- * @file scene.h
- *
- * @brief Header file of the scene class
- *
- * This file is part of RLFWB, a RayLib Framework for Bubbleshooter
- *
- * - Copyright 2024 Douwe westerdijk <westerdijk@protonmail.com>
- *
- */
-
 #ifndef SCENE_H
 #define SCENE_H
 
@@ -17,48 +6,53 @@
 #include <config.h>
 #include <cstring>
 
+/// Represents a scene in the game.
 class Scene : public Entity
 {
 public:
-  /// @brief Constructor of a Scene
-  /// @param width Width of the screen in pixels.
-  /// @param height Height of the screen in pixels.
-  /// @param title Title of the screen
+  /// Constructs a Scene object with the specified window settings.
+  /// @param s The window settings for the scene.
   Scene(WindowSettings s);
-  /// @brief Deconstructor of a scene
+
+  /// Destroys the Scene object.
   ~Scene();
 
-  /// @brief Update the scene. This function is PURE VIRTUAL. You MUST implement it when extending from Scene.
-  /// @param deltaTime Time elapsed since last frame draw.
-  /// @return void
+  /// Updates the scene based on the elapsed time.
+  /// @param deltaTime The time elapsed since the last update.
   virtual void update(float deltaTime) = 0;
-  /// @brief Core of the Entity, runs every frame until the user closes app
-  /// @param deltaTime Time elapsed since last frame draw.
-  /// @return void
+
+  /// Advances the scene by one frame.
+  /// @param deltaTime The time elapsed since the last frame.
   void tick(float deltaTime);
-  /// @brief Clear the background and possibly draw the FPS
-  /// @return void
+
+  /// Draws the scene.
+  /// @param deltaTime The time elapsed since the last frame.
   void draw(float deltaTime);
-  /// @brief Toggle the drawing of the FPS
-  /// @return void
+
+  /// Toggles the display of frames per second (FPS) on the screen.
   void toggleDrawFPS() { settings.drawfps = !settings.drawfps; };
-  /// @brief Toggle the use of vsync
-  /// @return void
+
+  /// Toggles vertical synchronization (VSync) for the scene.
   void toggleVsync();
-  /// @brief Wether the scene is active or not
-  /// @return Wether the scene is active or not
+
+  /// Checks if the scene is active.
+  /// @return True if the scene is active, false otherwise.
   bool isActive() { return !WindowShouldClose(); };
-  Vector2 getMouse()
-  {
-    return Vector2{(float)GetMouseX(), (float)GetMouseY()};
-  };
+
+  /// Crashes the scene with the specified error message.
+  /// @param msg The error message to display.
+  void crash(const char *msg);
+
+  /// The window settings for the scene.
   WindowSettings settings;
+
+  /// The camera used to view the scene.
   Camera2D *camera;
 
 protected:
 private:
+  /// The timer used to measure time intervals.
   Timer *t;
-  /// @brief Wether or not the scene should draw FPS
 };
 
 #endif

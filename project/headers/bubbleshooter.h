@@ -32,6 +32,9 @@ public:
   void shootBubble(bool &retFlag);
   void drawGameLayout();
 
+  void test(Vector2 coords);
+  Vector2 GetMouseAccurate();
+
 private:
   Vector2 bubbleSpawnLocation;
   Vector2 mousePosition;
@@ -39,6 +42,7 @@ private:
   Vector2 lineEnd;
   Bubble *bubble;
   std::vector<Bubble *> bubbles;
+
   Timer *t;
 };
 
