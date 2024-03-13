@@ -4,8 +4,6 @@
 #include <iostream>
 #include <raylib.h>
 
-#define RAYGUI_IMPLEMENTATION
-
 // Bubble related constants
 #define BUBBLE_SPAWN_Y_OFFSET 64
 #define BUBBLE_SIZE 32

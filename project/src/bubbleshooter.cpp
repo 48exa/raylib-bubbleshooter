@@ -1,10 +1,10 @@
 #include <bubbleshooter.h>
 #include <config.h>
 #include <helpers.h>
-#include <raygui.h>
 
 Bubbleshooter::Bubbleshooter(WindowSettings s) : Scene(s)
 {
+
   t = new Timer();
   t->start();
 
@@ -105,8 +105,7 @@ void Bubbleshooter::drawGameLayout()
 
   DrawCircle(GetMouseAccurate().x, GetMouseAccurate().y, 10, BLACK);
   // std::cout << "Mouse: (" << GetMouseAccurate().x << ", " << GetMouseAccurate().y << ")" << std::endl;
-  // DrawRectangle(1725, 150, 500, 300, BUTTON_COLOR);
-  GuiLabel({1750, 175, 100, 50}, "Press E to toggle bubble visibility");
+  DrawRectangle(1750, 100, 400, 150, BUTTON_COLOR);
 }
 
 void Bubbleshooter::test(Vector2 coords)
