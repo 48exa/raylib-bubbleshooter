@@ -1,13 +1,12 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include <raylib.h>
 #include <assert.h>
+#include <raylib.h>
 
 /// @class Timer
 /// @brief A class for measuring time intervals.
-class Timer
-{
+class Timer {
 public:
   /// @brief Default constructor.
   Timer();

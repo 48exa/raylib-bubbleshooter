@@ -2,8 +2,7 @@
 
 int Entity::_nextGuid = 0;
 
-Entity::Entity()
-{
+Entity::Entity() {
   _guid = _nextGuid++;
 
   _parent = nullptr;
@@ -14,15 +13,12 @@ Entity::Entity()
   _texture = {0};
 }
 
-Entity::~Entity()
-{
+Entity::~Entity() {
   removeTexture();
 }
 
-void Entity::addChild(Entity *child)
-{
-  if (child->_parent != nullptr)
-  {
+void Entity::addChild(Entity *child) {
+  if (child->_parent != nullptr) {
     std::cout << "has parent" << std::endl;
     child->_parent->removeChild(child);
   }
@@ -35,47 +31,34 @@ void Entity::addChild(Entity *child)
             << " at position: (" << child->position.x << ", " << child->position.y << ", " << child->position.z << ")" << std::endl;
 }
 
-void Entity::removeChild(Entity *child)
-{
-  // Iterate through the list of children of the current entity.
+void Entity::removeChild(Entity *child) {
+
   std::vector<Entity *>::iterator it = _children.begin();
-  while (it != _children.end())
-  {
-    // Find the child by comparing their unique identifiers (_guid).
-    if ((*it)->_guid == child->_guid)
-    {
-      // Disconnect the child from the current entity by setting its parent to nullptr.
-      child->_parent = nullptr;
-      // Remove the child from the list of children and update the iterator.
-      it = _children.erase(it);
-    }
-    else
-    {
-      // Move to the next child in the list.
-      ++it;
+  while (it != _children.end()) {       // Iterate through the list of children of the current entity.
+    if ((*it)->_guid == child->_guid) { // Find the child by comparing their unique identifiers (_guid).
+      child->_parent = nullptr;         // Disconnect the child from the current entity by setting its parent to nullptr.
+      it = _children.erase(it);         // Remove the child from the list of children and update the iterator.
+    } else {
+      ++it; // Move to the next child in the list.
     }
   }
 }
 
-void Entity::removeTexture()
-{
+void Entity::removeTexture() {
   if (IsTextureReady(this->_texture))
     UnloadTexture(this->_texture);
 }
 
-void Entity::addTexture(const char *filePath)
-{
+void Entity::addTexture(const char *filePath) {
   removeTexture();
   if (IsPathFile(filePath))
     this->_texture = LoadTexture(filePath);
 }
 
-void Entity::addTextureFromImage(Image image)
-{
+void Entity::addTextureFromImage(Image image) {
   this->_texture = LoadTextureFromImage(image);
 }
 
-void Entity::setTextureColor(Color c)
-{
+void Entity::setTextureColor(Color c) {
   this->_textureColor = c;
 }

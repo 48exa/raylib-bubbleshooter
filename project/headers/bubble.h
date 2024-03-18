@@ -1,13 +1,12 @@
 #ifndef BUBBLE_H
 #define BUBBLE_H
 
+#include <config.h>
 #include <entity.h>
 #include <math.h>
-#include <config.h>
 
 /// Bubble class represents a bubble entity in the game.
-class Bubble : public Entity
-{
+class Bubble : public Entity {
 public:
   /// Constructor for Bubble class.
   /// @param posx The x-coordinate of the bubble's position.
@@ -47,6 +46,7 @@ protected:
 
 private:
   friend class Bubbleshooter;
+  Bubble *neighbors[8];
 };
 
 #endif

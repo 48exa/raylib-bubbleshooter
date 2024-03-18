@@ -12,14 +12,13 @@
 #ifndef BUBBLESHOOTER_H
 #define BUBBLESHOOTER_H
 
+#include <bubble.h>
+#include <cmath>
+#include <config.h>
 #include <scene.h>
 #include <timer.h>
-#include <bubble.h>
-#include <config.h>
-#include <cmath>
 
-class Bubbleshooter : public Scene
-{
+class Bubbleshooter : public Scene {
 public:
   Bubbleshooter(WindowSettings settings);
   void initlevel();

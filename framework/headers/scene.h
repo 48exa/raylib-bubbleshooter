@@ -1,14 +1,13 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <entity.h>
-#include <timer.h>
 #include <config.h>
 #include <cstring>
+#include <entity.h>
+#include <timer.h>
 
 /// Represents a scene in the game.
-class Scene : public Entity
-{
+class Scene : public Entity {
 public:
   /// Constructs a Scene object with the specified window settings.
   /// @param s The window settings for the scene.

@@ -1,15 +1,14 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include <config.h>
 #include <raylib.h>
 #include <scene.h>
-#include <config.h>
 
 /// The Core class represents the core functionality of the application.
 /// The Core class is responsible for managing the main loop of the application and
 /// handling the rendering and updating of scenes.
-class Core
-{
+class Core {
 public:
   /// Constructs a Core object.
   Core();

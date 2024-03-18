@@ -21,19 +21,17 @@
  */
 
 #include <bubbleshooter.h>
-#include <core.h>
 #include <config.h>
+#include <core.h>
 
-int main(void)
-{
-    Core *core = new Core();
+int main(void) {
+  Core *core = new Core();
 
-    Bubbleshooter *scene = new Bubbleshooter(core->settings);
+  Bubbleshooter *scene = new Bubbleshooter(core->settings);
 
-    do
-    {
-        core->run(scene);
-    } while (scene->isActive());
+  do {
+    core->run(scene);
+  } while (scene->isActive());
 
-    return 0;
+  return 0;
 }

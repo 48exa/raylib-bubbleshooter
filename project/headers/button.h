@@ -3,8 +3,7 @@
 
 #include <entity.h>
 
-class Button : public Entity
-{
+class Button : public Entity {
 public:
   Button(Rectangle btn, Vector2 pos);
   ~Button();

@@ -1,14 +1,13 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <raylib.h>
-#include <iostream>
 #include <assert.h>
+#include <iostream>
+#include <raylib.h>
 #include <vector>
 
 /// The base class for all entities in the game.
-class Entity
-{
+class Entity {
 public:
   /// Default constructor.
   Entity();
