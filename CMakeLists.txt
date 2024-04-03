@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(bubbleshooter C CXX)
+project(main C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -15,16 +15,17 @@ add_subdirectory(libs/raylib)
 set(WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Glob all .cpp files from specified directories into SOURCES variable
-file(GLOB SOURCES "${WORKING_DIRECTORY}/framework/src/*.cpp" "${WORKING_DIRECTORY}/project/src/*.cpp")
+file(GLOB BUBBLESHOOTER "${WORKING_DIRECTORY}/framework/src/*.cpp" "${WORKING_DIRECTORY}/bubbleshooter/src/*.cpp")
+file(GLOB TYCOON "${WORKING_DIRECTORY}/framework/src/*.cpp" "${WORKING_DIRECTORY}/tycoon/src/*.cpp")
 
 # Create an executable with the project name and all the source files
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_executable(bubbleshooter ${BUBBLESHOOTER})
+add_executable(tycoon ${TYCOON})
 
 # Include directories for the project
-target_include_directories(${PROJECT_NAME} PUBLIC ${WORKING_DIRECTORY}/framework/headers ${WORKING_DIRECTORY}/project/headers) 
+target_include_directories(bubbleshooter PUBLIC ${WORKING_DIRECTORY}/framework/headers ${WORKING_DIRECTORY}/bubbleshooter/headers) 
+target_include_directories(tycoon PUBLIC ${WORKING_DIRECTORY}/framework/headers ${WORKING_DIRECTORY}/tycoon/headers) 
 
 # Link the raylib library privately to the project
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
-
-# Copy assets to the binary directory
-file(COPY assets/ DESTINATION ${CMAKE_BINARY_DIR})
+target_link_libraries(bubbleshooter PRIVATE raylib)
+target_link_libraries(tycoon PRIVATE raylib)
