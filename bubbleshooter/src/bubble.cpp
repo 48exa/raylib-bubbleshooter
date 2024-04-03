@@ -15,7 +15,7 @@ void Bubble::update(float deltaTime) {
   if (visible) {
     DrawCircle(position.x, position.y, BUBBLE_SIZE, color());
   } else {
-    DrawCircle(position.x, position.y, BUBBLE_SIZE, {255, 255, 255, 75});
+    DrawCircle(position.x, position.y, BUBBLE_SIZE, WHITE);
   }
 
   if (shouldMove) {

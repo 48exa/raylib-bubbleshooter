@@ -36,33 +36,20 @@
 #define GAME_SCREEN_BORDER_COLOR \
   { 230, 230, 255, 255 }
 
-constexpr Vector2 SIZE = {1200, 700};
-constexpr const char *TITLE = "Bubbleshooter";
-constexpr Color COLOR = {192, 192, 255, 255};
-constexpr bool VSYNC = true;
-constexpr bool DRAWFPS = true;
-constexpr bool FULLSCREEN = false;
-constexpr bool RESIZABLE = false;
-constexpr bool MSAA = false;
-constexpr bool WINDOW_DECORATED = true;
-constexpr float ZOOM = 0.5f;
-constexpr Vector2 SIZE_SCALED = {SIZE.x / ZOOM, SIZE.y / ZOOM};
-constexpr Vector2 GAME_SIZE = {816 / ZOOM, 616 / ZOOM};
-
 /// @brief Struct representing the settings for a window.
 typedef struct WindowSettings {
-  Vector2 size = SIZE;                      /**< The size of the window. */
-  Vector2 size_scaled = SIZE_SCALED;        /**< The scaled size of the window. */
-  Vector2 game_size = GAME_SIZE;            /**< The size of the game. */
-  const char *title = TITLE;                /**< The title of the window. */
-  Color color = COLOR;                      /**< The color of the window. */
-  bool vsync = VSYNC;                       /**< Whether to enable vertical sync. */
-  bool drawfps = DRAWFPS;                   /**< Whether to draw the frames per second. */
-  bool fullscreen = FULLSCREEN;             /**< Whether to enable fullscreen mode. */
-  bool resizable = RESIZABLE;               /**< Whether the window is resizable. */
-  bool MSAA = MSAA;                         /**< Whether to enable multisample anti-aliasing. */
-  bool window_decorated = WINDOW_DECORATED; /**< Whether the window has decorations. */
-  float zoom = ZOOM;                        /**< The zoom level of the window. */
+  Vector2 size = {0};                  /**< The size of the window. */
+  Vector2 size_scaled = {0};           /**< The scaled size of the window. */
+  Vector2 game_size = {0};             /**< The size of the game. */
+  const char *title = "Raylib Window"; /**< The title of the window. */
+  Color color = {0};                   /**< The color of the window. */
+  bool vsync = 0;                      /**< Whether to enable vertical sync. */
+  bool drawfps = 0;                    /**< Whether to draw the frames per second. */
+  bool fullscreen = 0;                 /**< Whether to enable fullscreen mode. */
+  bool resizable = 1;                  /**< Whether the window is resizable. */
+  bool MSAA = 0;                       /**< Whether to enable multisample anti-aliasing. */
+  bool window_decorated = 1;           /**< Whether the window has decorations. */
+  float zoom = 1.0f;                   /**< The zoom level of the window. */
 } WindowSettings;
 
 /// @class Config

@@ -83,7 +83,7 @@ void Bubbleshooter::update(float deltaTime) {
 
 void Bubbleshooter::initlevel() {
   bool visible = true;
-  for (int y = Y_OFFSET; y < 1070; y += Y_INCREMENT) {
+  for (int y = Y_OFFSET; y < 1072; y += Y_INCREMENT) {
     if (y > 600) {
       visible = false;
     }
@@ -158,9 +158,6 @@ void Bubbleshooter::drawGameLayout(float deltaTime) {
   }
 
   for (int i = 0; i < bubbles.size(); i++) {
-    // if (!bubbles[i]->visible) {
-    //   DrawCircleLines(bubbles[i]->position.x, bubbles[i]->position.y, BUBBLE_SIZE, WHITE);
-    // }
     bubbles[i]->update(deltaTime);
     DrawText(TextFormat("%d", i), bubbles[i]->position.x - 20, bubbles[i]->position.y - 10, 23, BLACK);
   }
