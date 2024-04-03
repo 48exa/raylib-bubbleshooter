@@ -23,6 +23,10 @@ Scene::~Scene() {
   CloseWindow();
 }
 
+void Scene::update(float deltaTime) {
+  
+}
+
 void Scene::tick(float deltaTime) {
   BeginDrawing();
   BeginMode2D(*camera);
@@ -43,7 +47,7 @@ void Scene::draw(float deltaTime) {
   for (Entity *child : this->children()) {
     if (IsTextureReady(child->texture()))
       DrawTexture(child->texture(), child->position.x, child->position.y, child->color());
-    child->update(deltaTime);
+    // child->update(deltaTime);
   }
 }
 

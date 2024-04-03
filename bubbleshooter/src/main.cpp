@@ -24,7 +24,7 @@
 #include <config.h>
 #include <core.h>
 
-int main(void) {
+int main(int argc, char **argv) {
   Core *core = new Core();
 
   Bubbleshooter *scene = new Bubbleshooter(core->settings);

@@ -29,9 +29,8 @@ public:
   void deleteBubble();
   bool outOfBounds();
   void shootBubble(bool &retFlag);
-  void drawGameLayout();
+  void drawGameLayout(float deltaTime);
 
-  void test(Vector2 coords);
   Vector2 GetMouseAccurate();
 
 private:

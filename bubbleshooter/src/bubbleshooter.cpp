@@ -17,6 +17,8 @@ Bubbleshooter::Bubbleshooter(WindowSettings s) : Scene(s) {
   bubble = nullptr;
 
   initlevel();
+
+  Bubble::setNeighbors(&bubbles);
 }
 
 Bubbleshooter::~Bubbleshooter() {
@@ -27,13 +29,65 @@ Bubbleshooter::~Bubbleshooter() {
   }
 }
 
+void Bubbleshooter::update(float deltaTime) {
+  drawGameLayout(deltaTime);
+
+  if (IsKeyPressed(KEY_Q)) {
+    this->toggleVsync();
+  }
+
+  if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+    bool bubbleCreated;
+    shootBubble(bubbleCreated);
+
+    if (bubbleCreated) {
+      return;
+    }
+  }
+
+  if (bubble != nullptr && (bubble->position.x - 10 < 0 || bubble->position.x > settings.game_size.x - 64)) {
+    bubble->bounce();
+  }
+
+  if (bubble != nullptr && outOfBounds()) {
+    deleteBubble();
+  }
+
+  for (Bubble *b : bubbles) {
+    if (CheckCollisionCircles({b->position.x, b->position.y}, BUBBLE_SIZE, {GetMouseAccurate().x, GetMouseAccurate().y}, 1)) {
+      if (IsKeyPressed(KEY_SPACE)) {
+
+        for (std::pair<const std::string, Bubble *> &it : b->neighbors) {
+          std::cout << it.first << "\t" << it.second << std::endl;
+          it.second->setTextureColor(WHITE);
+        }
+      }
+    }
+
+    if (b->visible && bubble != nullptr && CheckCollisionCircles({b->position.x, b->position.y}, BUBBLE_SIZE, {bubble->position.x, bubble->position.y}, 32)) {
+      bubble->shouldMove = false;
+    }
+  }
+}
+
+/*
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ *
+ */
+
 void Bubbleshooter::initlevel() {
   bool visible = true;
-  for (int y = Y_OFFSET; y < Y_THRESHOLD / settings.zoom; y += Y_INCREMENT) {
+  for (int y = Y_OFFSET; y < 1070; y += Y_INCREMENT) {
+    if (y > 600) {
+      visible = false;
+    }
     for (int x = X_OFFSET; x < X_THRESHOLD / settings.zoom - X_EXTRA_OFFSET; x += X_INCREMENT) {
-      if (y > (Y_THRESHOLD / settings.zoom) / 2) {
-        visible = false;
-      }
       if ((y - Y_OFFSET) % Y_EXTRA_OFFSET == 0) {
         bubbles.push_back(new Bubble(x + X_EXTRA_OFFSET, y, visible, Helpers::genRandomColor()));
       } else {
@@ -80,7 +134,7 @@ void Bubbleshooter::shootBubble(bool &bubbleCreated) {
   bubbleCreated = false;
 }
 
-void Bubbleshooter::drawGameLayout() {
+void Bubbleshooter::drawGameLayout(float deltaTime) {
   DrawRectangle(GAME_SCREEN_OFFSET_X, GAME_SCREEN_OFFSET_Y, settings.game_size.x, settings.game_size.y, GAME_SCREEN_COLOR);
   DrawRectangleLinesEx({GAME_SCREEN_OFFSET_X, GAME_SCREEN_OFFSET_Y, settings.game_size.x, settings.game_size.y}, GAME_BORDER_THICKNESS, GAME_SCREEN_BORDER_COLOR);
   DrawCircleLines(bubbleSpawnLocation.x, bubbleSpawnLocation.y, BUBBLE_SIZE, WHITE);
@@ -98,65 +152,20 @@ void Bubbleshooter::drawGameLayout() {
   DrawCircle(GetMouseAccurate().x, GetMouseAccurate().y, 10, BLACK);
   DrawRectangle(1700, 50, 400, 150, BUTTON_COLOR);
   DrawText(TextFormat("Time elapsed: %06.1f", t->getSeconds()), 1710, 100, 36, WHITE);
-}
 
-void Bubbleshooter::test(Vector2 coords) {
-
-  if (coords.x > 23) {
-    crash("X coordinate out of bounds when indexing array");
+  if (bubble != nullptr) {
+    bubble->update(deltaTime);
   }
 
-  if (coords.y > 17) {
-    crash("Y coordinate out of bounds when indexing array");
-  }
-
-  int index = (coords.x) + (coords.y * 24);
-
-  if (IsKeyPressed(KEY_E)) {
-    bubbles[index]->visible = !bubbles[index]->visible;
+  for (int i = 0; i < bubbles.size(); i++) {
+    // if (!bubbles[i]->visible) {
+    //   DrawCircleLines(bubbles[i]->position.x, bubbles[i]->position.y, BUBBLE_SIZE, WHITE);
+    // }
+    bubbles[i]->update(deltaTime);
+    DrawText(TextFormat("%d", i), bubbles[i]->position.x - 20, bubbles[i]->position.y - 10, 23, BLACK);
   }
 }
 
 Vector2 Bubbleshooter::GetMouseAccurate() {
   return Vector2{GetMouseX() / settings.zoom - MOUSE_OFFSET, GetMouseY() / settings.zoom - MOUSE_OFFSET};
-}
-
-void Bubbleshooter::update(float deltaTime) {
-  drawGameLayout();
-
-  test({0, 0});
-  if (IsKeyPressed(KEY_Q)) {
-    this->toggleVsync();
-  }
-
-  if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-    bool bubbleCreated;
-    shootBubble(bubbleCreated);
-
-    if (bubbleCreated) {
-      return;
-    }
-  }
-
-  if (bubble != nullptr && (bubble->position.x - 10 < 0 || bubble->position.x > settings.game_size.x - 64)) {
-    bubble->bounce();
-  }
-
-  if (bubble != nullptr && outOfBounds()) {
-    deleteBubble();
-  }
-
-  if (bubble != nullptr) {
-    for (Bubble *b : bubbles) {
-      if (!b->visible) {
-        return;
-      }
-
-      if (CheckCollisionCircles({b->position.x, b->position.y}, BUBBLE_SIZE, {bubble->position.x, bubble->position.y}, 32)) {
-        if (b->visible) {
-          bubble->shouldMove = false;
-        }
-      }
-    }
-  }
 }

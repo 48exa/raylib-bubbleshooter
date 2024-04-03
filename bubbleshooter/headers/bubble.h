@@ -4,6 +4,7 @@
 #include <config.h>
 #include <entity.h>
 #include <math.h>
+#include <unordered_map>
 
 /// Bubble class represents a bubble entity in the game.
 class Bubble : public Entity {
@@ -37,6 +38,8 @@ public:
   /// Indicates whether the bubble is visible or not.
   bool visible;
 
+  static void setNeighbors(const std::vector<Bubble *> *bubbles);
+
   /// Bounces the bubble off a surface.
   void bounce();
 
@@ -46,7 +49,7 @@ protected:
 
 private:
   friend class Bubbleshooter;
-  Bubble *neighbors[8];
+  std::unordered_map<std::string, Bubble *> neighbors;
 };
 
 #endif
