@@ -31,6 +31,9 @@ void Scene::tick(float deltaTime) {
   draw(deltaTime);
 
   EndMode2D();
+
+  update_static(deltaTime);
+
   EndDrawing();
 }
 
@@ -38,11 +41,6 @@ void Scene::draw(float deltaTime) {
   ClearBackground(settings.color);
   if (settings.drawfps) {
     SetWindowTitle(TextFormat("%s | FPS: %i", settings.title, GetFPS()));
-  }
-
-  for (Entity *child : this->children()) {
-    if (IsTextureReady(child->texture()))
-      DrawTexture(child->texture(), child->position.x, child->position.y, child->color());
   }
 }
 

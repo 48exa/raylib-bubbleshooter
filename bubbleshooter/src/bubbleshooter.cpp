@@ -81,6 +81,9 @@ void Bubbleshooter::update(float deltaTime) {
  *
  */
 
+void Bubbleshooter::update_static(float deltaTime) {
+}
+
 void Bubbleshooter::initlevel() {
   bool visible = true;
   for (int y = Y_OFFSET; y < 1072; y += Y_INCREMENT) {

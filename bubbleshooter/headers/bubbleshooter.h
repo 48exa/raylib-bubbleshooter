@@ -25,6 +25,7 @@ public:
   ~Bubbleshooter();
 
   virtual void update(float deltaTime);
+  virtual void update_static(float deltaTime) override;
 
   void deleteBubble();
   bool outOfBounds();

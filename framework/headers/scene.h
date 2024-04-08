@@ -42,6 +42,8 @@ public:
   /// @param msg The error message to display.
   void crash(const char *msg);
 
+  virtual void update_static(float deltaTime) = 0;
+
   /// The window settings for the scene.
   WindowSettings settings;
 
