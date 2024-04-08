@@ -11,6 +11,8 @@ Entity::Entity() {
   rotation = {0.0f, 0.0f, 0.0f};
 
   _texture = {0};
+
+  _textureColor = WHITE;
 }
 
 Entity::~Entity() {
@@ -53,6 +55,10 @@ void Entity::addTexture(const char *filePath) {
   removeTexture();
   if (IsPathFile(filePath))
     this->_texture = LoadTexture(filePath);
+
+  if (_texture.id == 0) {
+    perror("Failed to load texture: ");
+  }
 }
 
 void Entity::addTextureFromImage(Image image) {
