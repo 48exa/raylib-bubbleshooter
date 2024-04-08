@@ -16,16 +16,16 @@ set(WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
 # Glob all .cpp files from specified directories into SOURCES variable
 file(GLOB BUBBLESHOOTER "${WORKING_DIRECTORY}/framework/src/*.cpp" "${WORKING_DIRECTORY}/bubbleshooter/src/*.cpp")
-file(GLOB TYCOON "${WORKING_DIRECTORY}/framework/src/*.cpp" "${WORKING_DIRECTORY}/tycoon/src/*.cpp")
+file(GLOB TYCOON "${WORKING_DIRECTORY}/framework/src/*.cpp" "${WORKING_DIRECTORY}/tygoon/src/*.cpp")
 
 # Create an executable with the project name and all the source files
 add_executable(bubbleshooter ${BUBBLESHOOTER})
-add_executable(tycoon ${TYCOON})
+add_executable(tygoon ${TYCOON})
 
 # Include directories for the project
 target_include_directories(bubbleshooter PUBLIC ${WORKING_DIRECTORY}/framework/headers ${WORKING_DIRECTORY}/bubbleshooter/headers) 
-target_include_directories(tycoon PUBLIC ${WORKING_DIRECTORY}/framework/headers ${WORKING_DIRECTORY}/tycoon/headers) 
+target_include_directories(tygoon PUBLIC ${WORKING_DIRECTORY}/framework/headers ${WORKING_DIRECTORY}/tygoon/headers) 
 
 # Link the raylib library privately to the project
 target_link_libraries(bubbleshooter PRIVATE raylib)
-target_link_libraries(tycoon PRIVATE raylib)
+target_link_libraries(tygoon PRIVATE raylib)
