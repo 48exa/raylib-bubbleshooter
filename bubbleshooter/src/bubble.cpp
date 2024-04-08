@@ -1,6 +1,15 @@
 #include <bubble.h>
 
 Bubble::Bubble(float posx, float posy, bool vis, Color color) : Entity() {
+  this->visible = false;
+  this->position = {0};
+  this->shouldMove = false;
+  this->setTextureColor(WHITE);
+  this->destination = {0};
+  this->origin = {0};
+  this->direction = {0};
+  this->speed = 0;
+
   this->position = {posx, posy};
   this->speed = 1000;
   this->shouldMove = false;
@@ -13,9 +22,9 @@ Bubble::~Bubble() {
 
 void Bubble::update(float deltaTime) {
   if (visible) {
-    DrawCircle(position.x, position.y, BUBBLE_SIZE, color());
+    DrawCircle((int)position.x, (int)position.y, BUBBLE_SIZE, color());
   } else {
-    DrawCircle(position.x, position.y, BUBBLE_SIZE, WHITE);
+    DrawCircleLines((int)position.x, (int)position.y, BUBBLE_SIZE, {255, 255, 255, 255});
   }
 
   if (shouldMove) {
@@ -35,7 +44,7 @@ void Bubble::setNeighbors(const std::vector<Bubble *> *bubbles) {
     SW SE
   */
 
-  for (int n = 0; n < (*bubbles).size(); n++) {
+  for (size_t n = 0; n < (*bubbles).size(); n++) {
     (*bubbles)[n]->neighbors["NW"] = (*bubbles)[n - 24];
     (*bubbles)[n]->neighbors["NE"] = (*bubbles)[n - 23];
     (*bubbles)[n]->neighbors["W"] = (*bubbles)[n + 1];

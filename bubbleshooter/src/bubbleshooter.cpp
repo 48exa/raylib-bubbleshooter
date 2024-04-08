@@ -157,8 +157,11 @@ void Bubbleshooter::drawGameLayout(float deltaTime) {
     bubble->update(deltaTime);
   }
 
+  for (Bubble *b : bubbles) {
+    b->update(deltaTime);
+  }
+
   for (int i = 0; i < bubbles.size(); i++) {
-    bubbles[i]->update(deltaTime);
     DrawText(TextFormat("%d", i), bubbles[i]->position.x - 20, bubbles[i]->position.y - 10, 23, BLACK);
   }
 }
