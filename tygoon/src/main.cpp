@@ -7,11 +7,12 @@ int main(int argc, char *argv[]) {
 
   core->settings.title = "Tygoon";
   core->settings.size = {1280, 720};
-  core->settings.color = {25, 25, 25, 255};
-  core->settings.vsync = true;
+  core->settings.color = {75, 75, 75, 255};
+  core->settings.vsync = false;
   core->settings.drawfps = true;
   core->settings.fullscreen = false;
   core->settings.resizable = true;
+  core->settings.zoom = 5.0f;
 
   MainScene *scene = new MainScene(core->settings);
 
