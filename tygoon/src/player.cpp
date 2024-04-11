@@ -11,8 +11,10 @@ Player::Player(WindowSettings s) : AnimatedEntity() {
   spriteTime = 0.125f;
   spriteIndex = 0;
   spriteStartIndex = 0;
+  balance = 0;
 
   lastDirectionMoved = 0;
+  speed = 100.0f;
 
   this->addTexture("assets/tygooner.png");
 }
@@ -21,9 +23,9 @@ Player::~Player() {
 }
 
 void Player::update(float deltaTime) {
-  Rectangle source = {(float)spriteIndex * spriteSize, 0, spriteSize, spriteSize};
-  Rectangle dest = {position.x, position.y, spriteSize, spriteSize};
-  Vector2 origin = {dest.width / 2, dest.height / 2};
+  source = {(float)spriteIndex * spriteSize, 0, spriteSize, spriteSize};
+  dest = {position.x, position.y, spriteSize, spriteSize};
+  origin = {dest.width / 2, dest.height / 2};
 
   move(deltaTime);
   drawShadow();
@@ -37,6 +39,18 @@ void Player::update(float deltaTime) {
     t->restart();
   }
 };
+
+Rectangle Player::getHitbox() {
+  return {position.x - 8, position.y - 8, spriteSize, spriteSize};
+}
+
+
+bool Player::sprinting() {
+  if (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)) {
+    return true;
+  }
+  return false;
+}
 
 void Player::showIdleSprite() {
 
@@ -69,6 +83,12 @@ void Player::drawShadow() {
 }
 
 void Player::move(float deltaTime) {
+  if (sprinting()) {
+    speed = 250.0f;
+  } else {
+    speed = 100.0f;
+  }
+
   normalizeMovement(deltaTime);
 
   if (IsKeyDown(KEY_W)) {

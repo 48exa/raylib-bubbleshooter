@@ -17,6 +17,9 @@ public:
   ~Player();
 
   void update(float deltaTime) override;
+  bool sprinting();
+  double *getBalancePtr() { return &balance; };
+  Rectangle getHitbox();
 
 private:
   void move(float deltaTime);
@@ -26,9 +29,12 @@ private:
   void showIdleSprite();
 
   WindowSettings settings;
+  Rectangle source;
+  Rectangle dest;
+  Vector2 origin;
   Timer *t;
-
-  float speed = 100.0f;
+  double balance;
+  float speed;
   int lastDirectionMoved;
 };
 
