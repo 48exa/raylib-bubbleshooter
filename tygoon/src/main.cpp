@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
 
   core->settings.title = "Tygoon";
   core->settings.size = {1280, 720};
-  core->settings.color = {75, 75, 75, 255};
+  core->settings.color = {76, 63, 47, 255};
   core->settings.vsync = false;
   core->settings.drawfps = true;
   core->settings.fullscreen = false;
