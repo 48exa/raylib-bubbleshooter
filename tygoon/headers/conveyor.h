@@ -12,10 +12,11 @@ public:
   void update(float deltaTime) override;
   void update_static(float deltaTime);
   void sendHitbox(Player **p);
+
   Rectangle itemCollector;
+  Rectangle conveyor;
 
 private:
-  Rectangle conveyor;
   Rectangle playerHB;
   Player **player;
 };

@@ -4,13 +4,19 @@ MainScene::MainScene(WindowSettings s) : Scene(s) {
   player = new Player(s);
   collector = new CashCollector({0, 0, 16, 16});
   conveyor = new Conveyor({-175, -150, 350, 50});
+
   t = new Timer();
+  t->start();
+
+  _items = std::vector<Item *>();
+  _spawners = std::vector<Spawner *>();
+
+  _spawners.push_back(new Spawner({-150, -125, 0}, &_items, 10.0f));
 
   addChild(collector);
   addChild(conveyor);
-  addChild(player);
 
-  balance = player->getBalancePtr();
+  _balanceptr = player->getBalancePtr();
   collector->sendBalptr(player->getBalancePtr());
 }
 
@@ -27,23 +33,60 @@ void MainScene::update(float deltaTime) {
 
   collector->sendHitbox(&player);
   conveyor->sendHitbox(&player);
-  // player->update(deltaTime);
 
   updateCamera(deltaTime);
 
-  if (!collector->isStoodOn()) {
-    collector->addCash(10 * deltaTime);
-  };
+  drawItems(deltaTime);
+  drawSpawners(deltaTime);
 
-  if (CheckCollisionRecs(conveyor->itemCollector, player->getHitbox())) {
-    collector->addCash(rand() % 1000 * deltaTime);
-  }
+  player->update(deltaTime);
 }
 
 void MainScene::update_static(float deltaTime) {
   drawCoordinates();
   drawBalance();
   drawStats();
+  drawMouseDebug();
+}
+
+void MainScene::drawSpawners(float deltaTime) {
+  if (_spawners.size() > 0) {
+    for (signed int i = 0; i < _spawners.size(); i++) {
+      if (_spawners[i] == nullptr) {
+        delete _spawners[i];
+        continue;
+      }
+
+      _spawners[i]->update(deltaTime);
+    }
+  }
+};
+
+void MainScene::drawItems(float deltaTime) {
+  if (_items.size() > 0) {
+    for (signed int i = 0; i < _items.size(); i++) {
+      if (_items[i] == nullptr) {
+        delete _items[i];
+        continue;
+      }
+
+      _items[i]->update(deltaTime);
+
+      if (CheckCollisionRecs(conveyor->conveyor, _items[i]->getHitbox())) {
+        _items[i]->item.x += 100 * deltaTime;
+      }
+
+      if (CheckCollisionRecs(conveyor->itemCollector, _items[i]->getHitbox())) {
+        collector->addCash(_items[i]->getValue());
+        _items[i] = nullptr;
+      }
+    }
+  }
+}
+
+void MainScene::drawMouseDebug() {
+  Vector2 mouse = GetMousePosition();
+  DrawText(TextFormat("x: %.0f y: %.0f", player->position.x, player->position.y), mouse.x - 10, mouse.y - 10, 20, WHITE);
 }
 
 void MainScene::drawStats() {

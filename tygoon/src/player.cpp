@@ -41,7 +41,7 @@ void Player::update(float deltaTime) {
 };
 
 Rectangle Player::getHitbox() {
-  return {position.x - 8, position.y - 8, spriteSize, spriteSize};
+  return {position.x, position.y, spriteSize, spriteSize};
 }
 
 

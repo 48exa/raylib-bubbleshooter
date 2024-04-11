@@ -3,9 +3,12 @@
 
 #include <cashcollector.h>
 #include <conveyor.h>
+#include <item.h>
 #include <player.h>
 #include <scene.h>
+#include <spawner.h>
 #include <timer.h>
+#include <vector>
 
 class MainScene : public Scene {
 public:
@@ -25,11 +28,20 @@ private:
   void drawMap();
   void drawMapBorder();
 
-  double *balance;
+  void drawMouseDebug();
+  void drawItems(float deltaTime);
+  void drawSpawners(float deltaTime);
+
+  double *_balanceptr;
+
+  std::vector<Item *> _items;
+  std::vector<Spawner *> _spawners;
+
   CashCollector *collector;
   Player *player;
   Timer *t;
   Conveyor *conveyor;
+  Spawner *spawner;
 
   Color bg = {0, 0, 0, 100};
   Color outline = {255, 255, 255, 100};

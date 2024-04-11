@@ -15,7 +15,7 @@ public:
   void sendBalptr(double *balptr);
   void addCash(double $);
   bool isStoodOn();
-  const char *formatCash(double $);
+  static const char *formatCash(double $);
 
   Rectangle collector;
 
