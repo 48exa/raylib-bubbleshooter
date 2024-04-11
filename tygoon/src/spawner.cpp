@@ -16,7 +16,7 @@ Spawner::~Spawner() {
 void Spawner::update(float deltaTime) {
   DrawTexture(texture(), position.x, position.y, WHITE);
 
-  if (t->getSeconds() > GetRandomValue(1, 50) / 5.0f) {
+  if (t->getSeconds() > 2.0f) {
     spawnItem();
     t->restart();
   }

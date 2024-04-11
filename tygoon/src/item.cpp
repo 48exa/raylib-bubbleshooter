@@ -12,7 +12,6 @@ Item::~Item() {
 void Item::update(float deltaTime) {
   colorItem();
   DrawRectangle(item.x, item.y, item.width, item.height, col);
-  DrawText(TextFormat(" %s", CashCollector::formatCash(value)), item.x - 10, item.y - item.height / 2, 1, WHITE);
 }
 
 void Item::colorItem() {

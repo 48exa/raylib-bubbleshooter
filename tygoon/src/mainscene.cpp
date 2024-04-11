@@ -129,8 +129,9 @@ void MainScene::drawMapBorder() {
   w = 1130;
   h = 713;
   DrawRectangle(x, y, w, h, BROWN);
-  DrawLine(-2000, (h / 2 + y), 2000, (h / 2 + y), BLACK);
-  DrawLine((w / 2 + x), -2000, (w / 2 + x), 2000, BLACK);
+  // Center lines
+  // DrawLine(-2000, (h / 2 + y), 2000, (h / 2 + y), BLACK);
+  // DrawLine((w / 2 + x), -2000, (w / 2 + x), 2000, BLACK);
 }
 
 void MainScene::drawMap() {
