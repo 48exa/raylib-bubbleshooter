@@ -3,12 +3,15 @@
 MainScene::MainScene(WindowSettings s) : Scene(s) {
   player = new Player(s);
   collector = new CashCollector({0, 0, 16, 16});
+  conveyor = new Conveyor({-175, -150, 350, 50});
   t = new Timer();
 
   addChild(collector);
+  addChild(conveyor);
+  addChild(player);
 
-  balance = 0.0f;
-  collector->sendBalptr(&balance);
+  balance = player->getBalancePtr();
+  collector->sendBalptr(player->getBalancePtr());
 }
 
 MainScene::~MainScene() {
@@ -16,52 +19,79 @@ MainScene::~MainScene() {
 
 void MainScene::update(float deltaTime) {
   // manually updating for layering
+  drawMap();
+
+  for (Entity *child : children()) {
+    child->update(deltaTime);
+  }
+
   collector->sendHitbox(&player);
-  collector->update(deltaTime);
-  player->update(deltaTime);
+  conveyor->sendHitbox(&player);
+  // player->update(deltaTime);
 
   updateCamera(deltaTime);
 
   if (!collector->isStoodOn()) {
-    collector->addCash(10000 * deltaTime);
+    collector->addCash(10 * deltaTime);
   };
 
-  // DrawLineEx({collector->position.x + 50, collector->position.y}, {player->position.x, player->position.y}, 3, WHITE);
+  if (CheckCollisionRecs(conveyor->itemCollector, player->getHitbox())) {
+    collector->addCash(rand() % 1000 * deltaTime);
+  }
 }
 
 void MainScene::update_static(float deltaTime) {
   drawCoordinates();
   drawBalance();
+  drawStats();
+}
+
+void MainScene::drawStats() {
+  if (player->sprinting()) {
+    const char *text = "Sprinting";
+    DrawText(text, settings.size.x, settings.size.y, 20, WHITE);
+    float width = MeasureText(text, 20) + 40;
+
+    DrawRectangle(3, settings.size.y - 40, width, height, bg);
+    DrawRectangleLines(3, settings.size.y - 40, width, 35, outline);
+    DrawText(text, 3 + 5, settings.size.y - 35, 25, textCol);
+  }
 }
 
 void MainScene::drawBalance() {
-  const char *text = collector->formatCash(balance);
+  const char *text = collector->formatCash(*player->getBalancePtr());
   float width = MeasureText(text, 25) + 10;
-  int height = 35;
-  Color bg = {0, 0, 0, 100};
-  Color outline = {255, 255, 255, 100};
-  Color textCol = {230, 230, 230, 255};
-
   float topRight = settings.size.x - width - 3;
 
-  DrawRectangle(topRight, 3, width, height, bg);
-  DrawRectangleLines(topRight, 3, width, 35, outline);
+  DrawRectangle(topRight, topLeft, width, height, bg);
+  DrawRectangleLines(topRight, topLeft, width, 35, outline);
   DrawText(text, topRight + 5, 10, 25, textCol);
 }
 
 void MainScene::drawCoordinates() {
   float posX = player->position.x / 8;
   float posY = player->position.y / 8;
-  const char *coords = TextFormat("x: %.0f y: %.0f", posX, posY);
-  float width = MeasureText(coords, 20) + 20;
-  int height = 35;
-  Color bg = {0, 0, 0, 100};
-  Color outline = {255, 255, 255, 100};
-  Color textCol = {230, 230, 230, 255};
+  const char *text = TextFormat("x: %.0f y: %.0f", posX, posY);
+  float width = MeasureText(text, 20) + 20;
 
   DrawRectangle(3, 3, width, height, bg);
   DrawRectangleLines(3, 3, width, 35, outline);
-  DrawText(coords, 12, 10, 20, textCol);
+  DrawText(text, 12, 10, 20, textCol);
+}
+
+void MainScene::drawMapBorder() {
+  signed int x, y, w, h;
+  x = -565;
+  y = -357;
+  w = 1130;
+  h = 713;
+  DrawRectangle(x, y, w, h, BROWN);
+  DrawLine(-2000, (h / 2 + y), 2000, (h / 2 + y), BLACK);
+  DrawLine((w / 2 + x), -2000, (w / 2 + x), 2000, BLACK);
+}
+
+void MainScene::drawMap() {
+  drawMapBorder();
 }
 
 void MainScene::updateCamera(float deltaTime) {
@@ -80,5 +110,21 @@ void MainScene::updateCamera(float deltaTime) {
     if (camera->zoom > zoomMax) {
       camera->zoom = zoomMax;
     }
+  }
+  cameraClamp();
+}
+
+void MainScene::cameraClamp() {
+  if (player->position.y < -345) {
+    player->position.y = -345;
+  }
+  if (player->position.y > 340) {
+    player->position.y = 340;
+  }
+  if (player->position.x < -550) {
+    player->position.x = -550;
+  }
+  if (player->position.x > 555) {
+    player->position.x = 555;
   }
 }
