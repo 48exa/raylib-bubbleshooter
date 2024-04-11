@@ -17,12 +17,14 @@ public:
   bool isStoodOn();
   const char *formatCash(double $);
 
+  Rectangle collector;
+
 private:
   void sendCash();
   void changeButtonColor();
 
-  double *balptr;
-  Rectangle collector;
+  double *balanceptr;
+
   Rectangle playerHB;
   Color btnColor;
   Color outlineColor;

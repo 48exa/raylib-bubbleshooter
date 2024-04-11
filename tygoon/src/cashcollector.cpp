@@ -14,6 +14,8 @@ CashCollector::~CashCollector() {
 void CashCollector::update(float deltaTime) {
   label = TextFormat("Pick up cash: %s", formatCash(cash));
 
+  collector.x = 0 - collector.width / 2;
+
   if (collector.width < (float)MeasureText(label, 10) + 6) {
     collector.width = (float)MeasureText(label, 10) + 6;
   };
@@ -33,12 +35,12 @@ void CashCollector::update_static(float deltaTime) {
 }
 
 void CashCollector::sendCash() {
-  *balptr += cash;
+  *balanceptr += cash;
   cash = 0;
 }
 
 void CashCollector::sendBalptr(double *balptr) {
-  this->balptr = balptr;
+  this->balanceptr = balptr;
 }
 
 void CashCollector::changeButtonColor() {
