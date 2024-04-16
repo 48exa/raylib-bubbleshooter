@@ -11,7 +11,13 @@ MainScene::MainScene(WindowSettings s) : Scene(s) {
   _items = std::vector<Item *>();
   _spawners = std::vector<Spawner *>();
 
-  _spawners.push_back(new Spawner({-150, -125, 0}, &_items, 10.0f));
+  _spawners.push_back(new Spawner({-170, -125, 0}, &_items, 75, 5.0f));
+  _spawners.push_back(new Spawner({-120, -125, 0}, &_items, 500, 10.0f));
+  _spawners.push_back(new Spawner({-70, -125, 0}, &_items, 1500, 25.0f));
+  _spawners.push_back(new Spawner({-20, -125, 0}, &_items, 5000, 45.0f));
+  _spawners.push_back(new Spawner({30, -125, 0}, &_items, 10000, 100.0f));
+  _spawners.push_back(new Spawner({80, -125, 0}, &_items, 15000, 233.0f));
+  _spawners.push_back(new Spawner({130, -125, 0}, &_items, 999900, 25000.0f));
 
   addChild(collector);
   addChild(conveyor);
@@ -52,11 +58,19 @@ void MainScene::update_static(float deltaTime) {
 void MainScene::drawSpawners(float deltaTime) {
   if (_spawners.size() > 0) {
     for (signed int i = 0; i < _spawners.size(); i++) {
+      if (!_spawners[i]->isActive()) {
+        if (CheckCollisionRecs(player->getHitbox(), {_spawners[i]->position.x, _spawners[i]->position.y + 16, 16, 16})) {
+          if (*_balanceptr >= _spawners[i]->cost) {
+            *_balanceptr -= _spawners[i]->cost;
+            _spawners[i]->setActive();
+          }
+        }
+      }
+
       if (_spawners[i] == nullptr) {
         delete _spawners[i];
         continue;
       }
-
       _spawners[i]->update(deltaTime);
     }
   }

@@ -59,21 +59,21 @@ bool CashCollector::isStoodOn() {
 
 void CashCollector::sendHitbox(Player **p) {
   playerHB = {(*p)->position.x - 8,
-              (*p)->position.y - 8,
+              (*p)->position.y + 8,
               (*p)->spriteSize,
-              (*p)->spriteSize};
+              (*p)->spriteSize / 2};
 }
 
 const char *CashCollector::formatCash(double $) {
   const char *formatted = TextFormat("$%.0f", $);
 
-  if ($ > 1000) {
-    formatted = TextFormat("$%.1fk", $ / 1000);
+  if ($ > 1000.0) {
+    formatted = TextFormat("$%.1fk", $ / 1000.0f);
   }
-  if ($ > 1000000) {
-    formatted = TextFormat("$%.2fm", $ / 1000000);
+  if ($ > 1000000.0) {
+    formatted = TextFormat("$%.2fm", $ / 1000000.0f);
   }
-  if ($ > 1000000000) {
+  if ($ > 1000000000.0) {
     formatted = TextFormat("$%.1e", $);
   }
 

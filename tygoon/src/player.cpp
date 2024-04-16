@@ -11,7 +11,7 @@ Player::Player(WindowSettings s) : AnimatedEntity() {
   spriteTime = 0.125f;
   spriteIndex = 0;
   spriteStartIndex = 0;
-  balance = 0;
+  balance = 100;
 
   lastDirectionMoved = 0;
   speed = 100.0f;
@@ -41,7 +41,7 @@ void Player::update(float deltaTime) {
 };
 
 Rectangle Player::getHitbox() {
-  return {position.x, position.y, spriteSize, spriteSize};
+  return {position.x - 3, position.y + 5, spriteSize / 3, spriteSize / 5};
 }
 
 
