@@ -1,37 +1,45 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include <assert.h>
 #include <raylib.h>
 
-/// @class Timer
-/// @brief A class for measuring time intervals.
 class Timer {
 public:
-  /// @brief Default constructor.
-  Timer();
+  Timer() {
+    _startTime = 0;
+    _pausedTicks = 0;
+    _paused = false;
+    _started = false;
+  };
 
-  /// @brief Destructor.
   ~Timer();
 
-  /// @brief Starts the timer.
-  void start();
+  void start() {
+    _startTime = GetTime();
+    _started = true;
+    _paused = false;
+  };
 
-  /// @brief Stops the timer.
-  void stop();
+  void stop() {
+    _started = false;
+    _paused = false;
+  };
 
-  /// @brief Gets the elapsed time in seconds.
-  /// @return The elapsed time in seconds.
-  double getSeconds();
+  double getSeconds() {
+    if (_started)
+      return GetTime() - _startTime;
+    else
+      start();
+    return GetTime() - _startTime;
+  };
 
-  /// @brief Restarts the timer.
   void restart() { start(); };
 
 private:
-  double _startTime;   ///< The start time of the timer.
-  double _pausedTicks; ///< The paused ticks of the timer.
-  bool _started;       ///< Flag indicating if the timer has started.
-  bool _paused;        ///< Flag indicating if the timer is paused.
+  double _startTime;
+  double _pausedTicks;
+  bool _started;
+  bool _paused;
 };
 
 #endif

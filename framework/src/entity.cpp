@@ -47,8 +47,10 @@ void Entity::removeChild(Entity *child) {
 }
 
 void Entity::removeTexture() {
-  if (IsTextureReady(this->_texture))
+  if (IsTextureReady(this->_texture)) {
     UnloadTexture(this->_texture);
+    std::cout << "##################\nUnloaded Texture\n##################" << std::endl;
+  }
 }
 
 void Entity::addTexture(const char *filePath) {
