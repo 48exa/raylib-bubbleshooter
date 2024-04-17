@@ -3,6 +3,7 @@
 #include <scene.h>
 
 Scene::Scene(WindowSettings s) : Entity() {
+  InitAudioDevice();
   this->settings = s;
 
   camera = new Camera2D();

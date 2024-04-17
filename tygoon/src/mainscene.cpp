@@ -27,17 +27,25 @@ MainScene::MainScene(WindowSettings s) : Scene(s) {
   conveyor->sendPlayer(&player);
   _collectorCashPtr = collector->getCashPtr();
 
-  // Insane lambda function wow
-  commands["test"] = new Command([&]() {
-    std::cout << "Test command executed" << std::endl;
-  });
-
+  // Insane lambda functions wow
   commands["give"] = new Command([&]() {
     addCash(1000);
   });
 
   commands["dupe"] = new Command([&]() {
     addCash(*_balanceptr * 2);
+  });
+
+  commands["fpslimit"] = new Command([&]() {
+    SetTargetFPS(60);
+  });
+
+  commands["fpsunlimit"] = new Command([&]() {
+    SetTargetFPS(0);
+  });
+
+  commands["fart"] = new Command([&]() {
+    PlaySound(fart);
   });
 }
 
@@ -57,6 +65,7 @@ void MainScene::update(float deltaTime) {
   drawItems(deltaTime);
   drawSpawners(deltaTime);
 
+  player->playerMove(!commandMode);
   player->update(deltaTime);
 }
 
@@ -93,7 +102,7 @@ void MainScene::drawCommandBox() {
     key = GetCharPressed();
   }
 
-  if (IsKeyDown(KEY_BACKSPACE) && t->getSeconds() > 0.1f) {
+  if (IsKeyDown(KEY_BACKSPACE) && t->getSeconds() > 0.09f) {
     letterCount--;
     if (letterCount < 0)
       letterCount = 0;

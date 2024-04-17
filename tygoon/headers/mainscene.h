@@ -25,12 +25,12 @@ private:
   void drawStats();
   void cameraClamp();
   void updateCamera(float deltaTime);
+  void addCash(unsigned long amount);
+
   void drawCoordinates();
   void drawBalance();
-  void addCash(unsigned long amount);
   void drawMap();
   void drawMapBorder();
-
   void drawCommandBox();
   void drawMouseDebug();
   void drawItems(float deltaTime);
@@ -60,6 +60,8 @@ private:
   int letterCount = 0;
 
   bool commandMode;
+
+  Sound fart = LoadSound("assets/pokimane.wav");
 };
 
 #endif
