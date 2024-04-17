@@ -71,6 +71,7 @@ void MainScene::update(float deltaTime) {
   player->update(deltaTime);
 }
 
+// draws outside camera to avoid scaling / offset issues
 void MainScene::update_static(float deltaTime) {
   drawCoordinates();
   drawBalance();
