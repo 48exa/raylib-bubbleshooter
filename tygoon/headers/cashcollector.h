@@ -17,6 +17,7 @@ public:
   bool isStoodOn();
   static const char *formatCash(double $);
   void sendPlayer(Player **p);
+  double *getCashPtr() { return &cash; };
 
   Rectangle collector;
 

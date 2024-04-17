@@ -6,18 +6,17 @@ MainScene::MainScene(WindowSettings s) : Scene(s) {
   conveyor = new Conveyor({-175, -150, 350, 50});
 
   t = new Timer();
-  t->start();
 
   _items = std::vector<Item *>();
   _spawners = std::vector<Spawner *>();
 
-  _spawners.push_back(new Spawner({-170, -125, 0}, &_items, 75, 5.0f));
-  _spawners.push_back(new Spawner({-120, -125, 0}, &_items, 500, 10.0f));
-  _spawners.push_back(new Spawner({-70, -125, 0}, &_items, 1500, 25.0f));
-  _spawners.push_back(new Spawner({-20, -125, 0}, &_items, 5000, 45.0f));
-  _spawners.push_back(new Spawner({30, -125, 0}, &_items, 10000, 100.0f));
-  _spawners.push_back(new Spawner({80, -125, 0}, &_items, 15000, 233.0f));
-  _spawners.push_back(new Spawner({130, -125, 0}, &_items, 999900, 25000.0f));
+  _spawners.push_back(new Spawner({-159, -125, 0}, &_items, 75, 5.0f));
+  _spawners.push_back(new Spawner({-109, -125, 0}, &_items, 500, 10.0f));
+  _spawners.push_back(new Spawner({-59, -125, 0}, &_items, 1500, 25.0f));
+  _spawners.push_back(new Spawner({-9, -125, 0}, &_items, 5000, 45.0f));
+  _spawners.push_back(new Spawner({41, -125, 0}, &_items, 10000, 100.0f));
+  _spawners.push_back(new Spawner({91, -125, 0}, &_items, 15000, 233.0f));
+  _spawners.push_back(new Spawner({141, -125, 0}, &_items, 999900, 25000.0f));
 
   addChild(collector);
   addChild(conveyor);
@@ -26,6 +25,20 @@ MainScene::MainScene(WindowSettings s) : Scene(s) {
   collector->sendBalptr(player->getBalancePtr());
   collector->sendPlayer(&player);
   conveyor->sendPlayer(&player);
+  _collectorCashPtr = collector->getCashPtr();
+
+  // Insane lambda function wow
+  commands["test"] = new Command([&]() {
+    std::cout << "Test command executed" << std::endl;
+  });
+
+  commands["give"] = new Command([&]() {
+    addCash(1000);
+  });
+
+  commands["dupe"] = new Command([&]() {
+    addCash(*_balanceptr * 2);
+  });
 }
 
 MainScene::~MainScene() {
@@ -51,7 +64,63 @@ void MainScene::update_static(float deltaTime) {
   drawCoordinates();
   drawBalance();
   drawStats();
-  drawMouseDebug();
+  // drawMouseDebug();
+  drawCommandBox();
+}
+
+void MainScene::drawCommandBox() {
+  if (IsKeyPressed(KEY_SLASH)) {
+    commandMode = !commandMode;
+  }
+
+  if (!commandMode) {
+    if (letterCount > 0) {
+      letterCount = 0;
+      name[0] = '\0';
+    }
+    return;
+  }
+
+  int key = GetCharPressed();
+
+  while (key > 0) {
+    if ((key >= 32) && (key <= 125) && (letterCount < 255)) {
+      name[letterCount] = (char)key;
+      name[letterCount + 1] = '\0';
+      letterCount++;
+    }
+
+    key = GetCharPressed();
+  }
+
+  if (IsKeyDown(KEY_BACKSPACE) && t->getSeconds() > 0.1f) {
+    letterCount--;
+    if (letterCount < 0)
+      letterCount = 0;
+    name[letterCount] = '\0';
+    t->restart();
+  }
+
+  float xpos = settings.size.x / 3.0f;
+  float ypos = settings.size.y - 100;
+
+  int width = 400;
+
+  DrawRectangle(xpos, ypos, width, height, bg);
+  DrawRectangleLines(xpos, ypos, width, height, outline);
+  DrawText(name, xpos + 5, ypos + 5, 25, textCol);
+
+  if (IsKeyPressed(KEY_ENTER) && commandMode) {
+    std::string command = name;
+
+    if (!command.empty()) {
+      command.erase(0, 1);
+    }
+
+    if (commands.find(command) != commands.end()) {
+      commands[command]->execute();
+    }
+  };
 }
 
 void MainScene::drawSpawners(float deltaTime) {
@@ -149,6 +218,10 @@ void MainScene::drawMapBorder() {
 
 void MainScene::drawMap() {
   drawMapBorder();
+}
+
+void MainScene::addCash(unsigned long amount) {
+  *_collectorCashPtr += amount;
 }
 
 void MainScene::updateCamera(float deltaTime) {

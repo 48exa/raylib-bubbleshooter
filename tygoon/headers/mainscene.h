@@ -2,14 +2,16 @@
 #define MAINSCENE_H
 
 #include <cashcollector.h>
+#include <command.h>
 #include <conveyor.h>
 #include <item.h>
 #include <player.h>
 #include <scene.h>
 #include <spawner.h>
+#include <string>
 #include <timer.h>
+#include <unordered_map>
 #include <vector>
-#include <command.h>
 
 class MainScene : public Scene {
 public:
@@ -25,20 +27,23 @@ private:
   void updateCamera(float deltaTime);
   void drawCoordinates();
   void drawBalance();
-  void addBalance(unsigned long *amount);
+  void addCash(unsigned long amount);
   void drawMap();
   void drawMapBorder();
 
+  void drawCommandBox();
   void drawMouseDebug();
   void drawItems(float deltaTime);
   void drawSpawners(float deltaTime);
 
   double *_balanceptr;
+  double *_collectorCashPtr;
 
   std::vector<Item *> _items;
   std::vector<Spawner *> _spawners;
 
-  Command *cmd;
+  std::unordered_map<std::string, Command *> commands;
+
   CashCollector *collector;
   Player *player;
   Timer *t;
@@ -48,8 +53,13 @@ private:
   Color bg = {0, 0, 0, 100};
   Color outline = {255, 255, 255, 100};
   Color textCol = {230, 230, 230, 255};
+
   int height = 35;
   int topLeft = 3;
+  char name[256];
+  int letterCount = 0;
+
+  bool commandMode;
 };
 
 #endif

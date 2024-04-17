@@ -46,7 +46,6 @@ Rectangle Player::getHitbox() {
   return {position.x - 3, position.y + 5, spriteSize / 3, spriteSize / 5};
 }
 
-
 bool Player::sprinting() {
   if (IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)) {
     return true;
@@ -85,6 +84,7 @@ void Player::drawShadow() {
 }
 
 void Player::move(float deltaTime) {
+
   if (sprinting()) {
     speed = 250.0f;
   } else {
