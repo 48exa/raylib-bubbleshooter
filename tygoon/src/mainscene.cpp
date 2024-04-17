@@ -10,6 +10,7 @@ MainScene::MainScene(WindowSettings s) : Scene(s) {
   _items = std::vector<Item *>();
   _spawners = std::vector<Spawner *>();
 
+  // Spawner constructor &_items could be static, only send once
   _spawners.push_back(new Spawner({-159, -125, 0}, &_items, 75, 5.0f));
   _spawners.push_back(new Spawner({-109, -125, 0}, &_items, 500, 10.0f));
   _spawners.push_back(new Spawner({-59, -125, 0}, &_items, 1500, 25.0f));
@@ -21,6 +22,7 @@ MainScene::MainScene(WindowSettings s) : Scene(s) {
   addChild(collector);
   addChild(conveyor);
 
+  // holy pointers
   _balanceptr = player->getBalancePtr();
   collector->sendBalptr(player->getBalancePtr());
   collector->sendPlayer(&player);
@@ -82,6 +84,7 @@ void MainScene::drawCommandBox() {
     commandMode = !commandMode;
   }
 
+  // C style char array
   if (!commandMode) {
     if (letterCount > 0) {
       letterCount = 0;
@@ -163,6 +166,7 @@ void MainScene::drawItems(float deltaTime) {
 
       _items[i]->update(deltaTime);
 
+      // Could be done in Conveyor.cpp
       if (CheckCollisionRecs(conveyor->conveyor, _items[i]->getHitbox())) {
         _items[i]->item.x += 100 * deltaTime;
       }
