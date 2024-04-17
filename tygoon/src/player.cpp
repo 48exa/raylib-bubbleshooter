@@ -84,6 +84,10 @@ void Player::drawShadow() {
 }
 
 void Player::move(float deltaTime) {
+  if (!shouldMove) {
+    showIdleSprite();
+    return;
+  };
 
   if (sprinting()) {
     speed = 250.0f;
@@ -175,4 +179,8 @@ void Player::normalizeMovement(float deltaTime) {
 
   position.x += dx * speed * deltaTime;
   position.y += dy * speed * deltaTime;
+}
+
+void Player::playerMove(bool SHOULD_THE_PLAYER_MOVE_OR_NOT_REALLY_AM_NOT_SURE) {
+  shouldMove = SHOULD_THE_PLAYER_MOVE_OR_NOT_REALLY_AM_NOT_SURE;
 }

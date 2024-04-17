@@ -19,6 +19,8 @@ public:
   void update(float deltaTime) override;
   bool sprinting();
   double *getBalancePtr() { return &balance; };
+  void playerMove(bool SHOULD_THE_PLAYER_MOVE_OR_NOT_REALLY_AM_NOT_SURE);
+
   Rectangle getHitbox();
 
 private:
@@ -33,6 +35,8 @@ private:
   Rectangle dest;
   Vector2 origin;
   Timer *t;
+
+  bool shouldMove;
   double balance;
   float speed;
   int lastDirectionMoved;
