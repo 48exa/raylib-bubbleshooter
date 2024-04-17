@@ -12,6 +12,7 @@ public:
   void execute();
 
 private:
+  // callback func set with lambda
   std::function<void()> cmd_function;
 };
 
