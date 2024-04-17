@@ -6,6 +6,7 @@
 #include <config.h>
 #include <timer.h>
 
+// saving a whole 19 bytes with this
 constexpr const char *UP = "up";
 constexpr const char *DOWN = "down";
 constexpr const char *LEFT = "left";
