@@ -6,14 +6,16 @@
 
 class Command {
 public:
-  Command(std::function<void()> function);
+  Command(std::function<void()> function, std::string desc);
   ~Command();
 
   void execute();
+  std::string Description() { return description; };
 
 private:
   // NOTE - callback func set with lambda
   std::function<void()> cmd_function;
+  std::string description;
 };
 
 #endif

@@ -1,7 +1,8 @@
 #include <command.h>
 
-Command::Command(std::function<void()> function) {
+Command::Command(std::function<void()> function, std::string desc) {
   this->cmd_function = function;
+  this->description = desc;
 }
 
 Command::~Command() {
@@ -9,6 +10,6 @@ Command::~Command() {
 }
 
 void Command::execute() {
-  std::cout << "Executing command" << std::endl;
+  std::cout << "##### Executing command: " << this->description << " #####" << std::endl;
   this->cmd_function();
 }

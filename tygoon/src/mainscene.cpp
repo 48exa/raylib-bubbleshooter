@@ -38,23 +38,35 @@ MainScene::MainScene(WindowSettings s) : Scene(s) {
   // NOTE - holy lambdas
   commands["give"] = new Command([&]() {
     addCash(1000);
-  });
+  }, "gives you 1000 cash");
 
   commands["dupe"] = new Command([&]() {
     addCash(*_balanceptr * 2);
-  });
+  }, "gives you double the cash in your balance");
 
   commands["fpslimit"] = new Command([&]() {
     SetTargetFPS(60);
-  });
+  }, "limits the fps to 60");
 
   commands["fpsunlimit"] = new Command([&]() {
     SetTargetFPS(0);
-  });
+  }, "unlimits the fps");
 
   commands["fart"] = new Command([&]() {
     PlaySound(fart);
-  });
+  }, "plays a fart sound");
+
+  commands["printbal"] = new Command([&]() {
+    std::cout << std::setiosflags(std::ios_base::fixed) << std::setprecision(2) << *_balanceptr << std::endl;
+  }, "prints your balance");
+
+  commands["help"] = new Command([&]() {
+    std::cout << "Commands: " << std::endl;
+
+    for (std::pair<const std::string, Command *> &it : commands) {
+      std::cout << "/" <<it.first << "\n-> " << it.second->Description() << std::endl;
+    }
+  }, "prints all available commands");
 }
 
 MainScene::~MainScene() {

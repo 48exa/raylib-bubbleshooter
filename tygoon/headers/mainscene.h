@@ -4,8 +4,10 @@
 #include <algorithm>
 #include <cashcollector.h>
 #include <cctype>
+#include <cmath>
 #include <command.h>
 #include <conveyor.h>
+#include <iomanip>
 #include <item.h>
 #include <player.h>
 #include <scene.h>
