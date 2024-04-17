@@ -44,6 +44,7 @@ private:
 
   std::unordered_map<std::string, Command *> commands;
 
+  // items & spawner are redundant
   CashCollector *collector;
   Player *player;
   Timer *t;
