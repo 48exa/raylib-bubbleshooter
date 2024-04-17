@@ -15,7 +15,10 @@ public:
   void sendBalptr(double *balptr);
   void addCash(double $);
   bool isStoodOn();
+  
+  // this should be a helper function outside this class
   static const char *formatCash(double $);
+
   void sendPlayer(Player **p);
   double *getCashPtr() { return &cash; };
 
