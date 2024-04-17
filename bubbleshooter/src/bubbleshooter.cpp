@@ -59,7 +59,7 @@ void Bubbleshooter::update(float deltaTime) {
     if (CheckCollisionCircles({b->position.x, b->position.y}, BUBBLE_SIZE, {GetMouseAccurate().x, GetMouseAccurate().y}, 1)) {
       if (IsKeyPressed(KEY_SPACE)) {
 
-        // NOTE - 'grid' system p2
+        // NOTE - setting neighbors
         for (std::pair<const std::string, Bubble *> &it : b->neighbors) {
           std::cout << it.first << "\t" << it.second << std::endl;
           it.second->setTextureColor(WHITE);
@@ -87,7 +87,7 @@ void Bubbleshooter::update(float deltaTime) {
 void Bubbleshooter::update_static(float deltaTime) {
 }
 
-// holy unreadable
+// NOTE - 'grid' system p2: holy unreadable
 void Bubbleshooter::initlevel() {
   bool visible = true;
   for (int y = Y_OFFSET; y < 1072; y += Y_INCREMENT) {

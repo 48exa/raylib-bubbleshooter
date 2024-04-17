@@ -10,6 +10,8 @@ Conveyor::~Conveyor() {
 }
 
 void Conveyor::update(float deltaTime) {
+  getHitbox();
+
   DrawRectangle(conveyor.x, conveyor.y, conveyor.width, conveyor.height, DARKGRAY);
   DrawRectangleLines(conveyor.x, conveyor.y, conveyor.width, conveyor.height, GRAY);
 

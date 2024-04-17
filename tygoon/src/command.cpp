@@ -10,6 +10,6 @@ Command::~Command() {
 }
 
 void Command::execute() {
-  std::cout << "##### Executing command: " << this->description << " #####" << std::endl;
+  std::cout << "##### Executing command #####" << std::endl;
   this->cmd_function();
 }
