@@ -37,6 +37,7 @@ void Bubble::bounce() {
   this->direction.x *= -1;
 }
 
+// NOTE - weird pointer stuff
 void Bubble::setNeighbors(const std::vector<Bubble *> *bubbles) {
   /*
     NW NE
@@ -44,7 +45,7 @@ void Bubble::setNeighbors(const std::vector<Bubble *> *bubbles) {
     SW SE
   */
 
-  for (size_t n = 0; n < (*bubbles).size(); n++) {
+  for (size_t n = 0; n < bubbles->size(); n++) {
     (*bubbles)[n]->neighbors["NW"] = (*bubbles)[n - 24];
     (*bubbles)[n]->neighbors["NE"] = (*bubbles)[n - 23];
     (*bubbles)[n]->neighbors["W"] = (*bubbles)[n + 1];

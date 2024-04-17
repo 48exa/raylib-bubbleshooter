@@ -7,7 +7,7 @@ Bubbleshooter::Bubbleshooter(WindowSettings s) : Scene(s) {
   t = new Timer();
   t->start();
 
-  // 23x17
+  // NOTE - 'grid' system
   bubbles = std::vector<Bubble *>();
 
   bubbleSpawnLocation = {settings.game_size.x / 2, settings.game_size.y - BUBBLE_SPAWN_Y_OFFSET};
@@ -29,6 +29,7 @@ Bubbleshooter::~Bubbleshooter() {
   }
 }
 
+// should be refactored into methods
 void Bubbleshooter::update(float deltaTime) {
   drawGameLayout(deltaTime);
 
@@ -53,10 +54,12 @@ void Bubbleshooter::update(float deltaTime) {
     deleteBubble();
   }
 
+  // unreadable
   for (Bubble *b : bubbles) {
     if (CheckCollisionCircles({b->position.x, b->position.y}, BUBBLE_SIZE, {GetMouseAccurate().x, GetMouseAccurate().y}, 1)) {
       if (IsKeyPressed(KEY_SPACE)) {
 
+        // NOTE - 'grid' system p2
         for (std::pair<const std::string, Bubble *> &it : b->neighbors) {
           std::cout << it.first << "\t" << it.second << std::endl;
           it.second->setTextureColor(WHITE);
@@ -84,6 +87,7 @@ void Bubbleshooter::update(float deltaTime) {
 void Bubbleshooter::update_static(float deltaTime) {
 }
 
+// holy unreadable
 void Bubbleshooter::initlevel() {
   bool visible = true;
   for (int y = Y_OFFSET; y < 1072; y += Y_INCREMENT) {
@@ -116,6 +120,7 @@ bool Bubbleshooter::outOfBounds() {
   return {IsMouseButtonPressed(MOUSE_BUTTON_RIGHT) || bubble->position.y < 0 || bubble->position.y > settings.game_size.y};
 }
 
+// just normalization of movement
 void Bubbleshooter::shootBubble(bool &bubbleCreated) {
   bubbleCreated = true;
   if (bubble != nullptr) {
@@ -160,10 +165,12 @@ void Bubbleshooter::drawGameLayout(float deltaTime) {
     bubble->update(deltaTime);
   }
 
+  // why is this in game layout
   for (Bubble *b : bubbles) {
     b->update(deltaTime);
   }
 
+  // draw the bubble indexes
   for (int i = 0; i < bubbles.size(); i++) {
     DrawText(TextFormat("%d", i), bubbles[i]->position.x - 20, bubbles[i]->position.y - 10, 23, BLACK);
   }

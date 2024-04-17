@@ -28,9 +28,10 @@ public:
   double getSeconds() {
     if (_started)
       return GetTime() - _startTime;
-    else
+    else {
       start();
-    return GetTime() - _startTime;
+      return GetTime() - _startTime;
+    };
   };
 
   void restart() { start(); };
