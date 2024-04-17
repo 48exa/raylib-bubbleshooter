@@ -122,7 +122,7 @@ void Player::move(float deltaTime) {
   }
 }
 
-// NOTE: !
+// NOTE: player animation
 void Player::animate(std::string direction) {
   static std::string lastDirection = "";
 

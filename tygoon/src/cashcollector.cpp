@@ -66,6 +66,7 @@ void CashCollector::getHitbox() {
   playerHB = (*playerptr)->getHitbox();
 }
 
+// NOTE - this shouldn't be defined here
 const char *CashCollector::formatCash(double $) {
   const char *formatted = TextFormat("$%.0f", $);
 

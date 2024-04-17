@@ -1,7 +1,9 @@
 #ifndef MAINSCENE_H
 #define MAINSCENE_H
 
+#include <algorithm>
 #include <cashcollector.h>
+#include <cctype>
 #include <command.h>
 #include <conveyor.h>
 #include <item.h>

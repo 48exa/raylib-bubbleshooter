@@ -1,6 +1,12 @@
 #include <mainscene.h>
 
 MainScene::MainScene(WindowSettings s) : Scene(s) {
+  SetExitKey(KEY_TAB);
+
+  Image icon = LoadImage("assets/icon.png");
+  SetWindowIcon(icon);
+  UnloadImage(icon);
+
   player = new Player(s);
   collector = new CashCollector({0, 0, 16, 16});
   conveyor = new Conveyor({-175, -150, 350, 50});
@@ -22,14 +28,14 @@ MainScene::MainScene(WindowSettings s) : Scene(s) {
   addChild(collector);
   addChild(conveyor);
 
-  // holy pointers
+  // NOTE - sending pointers
   _balanceptr = player->getBalancePtr();
   collector->sendBalptr(player->getBalancePtr());
   collector->sendPlayer(&player);
   conveyor->sendPlayer(&player);
   _collectorCashPtr = collector->getCashPtr();
 
-  // Insane lambda functions wow
+  // NOTE - holy lambdas
   commands["give"] = new Command([&]() {
     addCash(1000);
   });
@@ -55,7 +61,7 @@ MainScene::~MainScene() {
 }
 
 void MainScene::update(float deltaTime) {
-  // manually updating for layering
+  // NOTE - manually updating for layering
   drawMap();
 
   for (Entity *child : children()) {
@@ -71,7 +77,7 @@ void MainScene::update(float deltaTime) {
   player->update(deltaTime);
 }
 
-// draws outside camera to avoid scaling / offset issues
+// NOTE - draws outside camera to avoid scaling / offset issues
 void MainScene::update_static(float deltaTime) {
   drawCoordinates();
   drawBalance();
@@ -83,16 +89,23 @@ void MainScene::update_static(float deltaTime) {
 void MainScene::drawCommandBox() {
   if (IsKeyPressed(KEY_SLASH)) {
     commandMode = !commandMode;
+  };
+
+  if (IsKeyPressed(KEY_ESCAPE)) {
+    commandMode = false;
   }
 
-  // C style char array
+  // NOTE - C style char array
   if (!commandMode) {
+    SetExitKey(KEY_ESCAPE);
     if (letterCount > 0) {
       letterCount = 0;
       name[0] = '\0';
     }
     return;
   }
+
+  SetExitKey(KEY_TAB);
 
   int key = GetCharPressed();
 
@@ -126,6 +139,9 @@ void MainScene::drawCommandBox() {
   if (IsKeyPressed(KEY_ENTER) && commandMode) {
     std::string command = name;
 
+    // command.toLowerCase();
+    std::transform(command.begin(), command.end(), command.begin(), [](unsigned char c) { return std::tolower(c); });
+
     if (!command.empty()) {
       command.erase(0, 1);
     }
@@ -146,11 +162,6 @@ void MainScene::drawSpawners(float deltaTime) {
             _spawners[i]->setActive();
           }
         }
-      }
-
-      if (_spawners[i] == nullptr) {
-        delete _spawners[i];
-        continue;
       }
       _spawners[i]->update(deltaTime);
     }
@@ -242,18 +253,27 @@ void MainScene::updateCamera(float deltaTime) {
   camera->offset = {settings.size.x / 2, settings.size.y / 2};
   camera->target = {player->position.x, player->position.y};
 
+  constexpr float zoomIncrement = 1.0f;
+  constexpr float zoomMax = 10.0f;
+
   float wheel = GetMouseWheelMove();
   if (wheel != 0) {
-    const float zoomIncrement = 1.0f;
-    const float zoomMax = 10.0f;
 
     camera->zoom += (wheel * zoomIncrement);
-    if (camera->zoom < zoomIncrement) {
-      camera->zoom = zoomIncrement;
-    }
-    if (camera->zoom > zoomMax) {
-      camera->zoom = zoomMax;
-    }
+  }
+
+  if (IsKeyPressed(KEY_UP)) {
+    camera->zoom += zoomIncrement;
+  }
+  if (IsKeyPressed(KEY_DOWN)) {
+    camera->zoom -= zoomIncrement;
+  }
+
+  if (camera->zoom < zoomIncrement) {
+    camera->zoom = zoomIncrement;
+  }
+  if (camera->zoom > zoomMax) {
+    camera->zoom = zoomMax;
   }
   cameraClamp();
 }
