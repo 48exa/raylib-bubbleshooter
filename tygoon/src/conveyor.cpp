@@ -17,11 +17,14 @@ void Conveyor::update(float deltaTime) {
   DrawRectangleLines(itemCollector.x, itemCollector.y, itemCollector.width, itemCollector.height, DARKGREEN);
 
   if (CheckCollisionRecs(playerHB, conveyor)) {
-    (*player)->position.x += 100 * deltaTime;
+    (*playerptr)->position.x += 100 * deltaTime;
   }
 }
 
-void Conveyor::sendHitbox(Player **p) {
-  playerHB = (*p)->getHitbox();
-  player = p;
+void Conveyor::sendPlayer(Player **p) {
+  playerptr = p;
+}
+
+void Conveyor::getHitbox() {
+  playerHB = (*playerptr)->getHitbox();
 }

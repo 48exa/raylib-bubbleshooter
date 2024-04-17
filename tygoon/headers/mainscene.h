@@ -9,6 +9,7 @@
 #include <spawner.h>
 #include <timer.h>
 #include <vector>
+#include <command.h>
 
 class MainScene : public Scene {
 public:
@@ -37,6 +38,7 @@ private:
   std::vector<Item *> _items;
   std::vector<Spawner *> _spawners;
 
+  Command *cmd;
   CashCollector *collector;
   Player *player;
   Timer *t;

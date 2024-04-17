@@ -16,15 +16,18 @@ public:
   void addCash(double $);
   bool isStoodOn();
   static const char *formatCash(double $);
+  void sendPlayer(Player **p);
 
   Rectangle collector;
 
 private:
+  void getHitbox();
   void sendCash();
   void changeButtonColor();
 
   double *balanceptr;
 
+  Player **playerptr;
   Rectangle playerHB;
   Color btnColor;
   Color outlineColor;

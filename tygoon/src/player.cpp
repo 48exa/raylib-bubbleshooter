@@ -3,6 +3,8 @@
 Player::Player(WindowSettings s) : AnimatedEntity() {
   settings = s;
 
+  position = {0, 25};
+
   t = new Timer();
   t->start();
 
@@ -11,7 +13,7 @@ Player::Player(WindowSettings s) : AnimatedEntity() {
   spriteTime = 0.125f;
   spriteIndex = 0;
   spriteStartIndex = 0;
-  balance = 100;
+  balance = 0;
 
   lastDirectionMoved = 0;
   speed = 100.0f;

@@ -24,6 +24,8 @@ MainScene::MainScene(WindowSettings s) : Scene(s) {
 
   _balanceptr = player->getBalancePtr();
   collector->sendBalptr(player->getBalancePtr());
+  collector->sendPlayer(&player);
+  conveyor->sendPlayer(&player);
 }
 
 MainScene::~MainScene() {
@@ -36,9 +38,6 @@ void MainScene::update(float deltaTime) {
   for (Entity *child : children()) {
     child->update(deltaTime);
   }
-
-  collector->sendHitbox(&player);
-  conveyor->sendHitbox(&player);
 
   updateCamera(deltaTime);
 

@@ -5,13 +5,14 @@ CashCollector::CashCollector(Rectangle collector) : Entity() {
   label = "Pick up cash";
   btnColor = GREEN;
   outlineColor = DARKGREEN;
-  cash = 0;
+  cash = 75;
 }
 
 CashCollector::~CashCollector() {
 }
 
 void CashCollector::update(float deltaTime) {
+  getHitbox();
   label = TextFormat("Pick up cash: %s", formatCash(cash));
 
   collector.x = 0 - collector.width / 2;
@@ -57,11 +58,12 @@ bool CashCollector::isStoodOn() {
   return CheckCollisionRecs(playerHB, collector);
 }
 
-void CashCollector::sendHitbox(Player **p) {
-  playerHB = {(*p)->position.x - 8,
-              (*p)->position.y + 8,
-              (*p)->spriteSize,
-              (*p)->spriteSize / 2};
+void CashCollector::sendPlayer(Player **p) {
+  playerptr = p;
+}
+
+void CashCollector::getHitbox() {
+  playerHB = (*playerptr)->getHitbox();
 }
 
 const char *CashCollector::formatCash(double $) {
