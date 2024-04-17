@@ -22,6 +22,8 @@ private:
   float multiplier;
 
   Timer *t;
+  
+  // ptr to vector in mainscene
   std::vector<Item *> *itemsptr;
 
   bool active = false;
