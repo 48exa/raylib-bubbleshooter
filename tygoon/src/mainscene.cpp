@@ -35,8 +35,8 @@ MainScene::MainScene(WindowSettings s) : Scene(s) {
   conveyor->sendPlayer(&player);
   _collectorCashPtr = collector->getCashPtr();
 
-  // NOTE - holy lambdas
-  commands["give"] = new Command([&]() {
+  // NOTE - holy lambdas() 
+  commands["give"] = new Command([&]{
     addCash(1000);
   }, "gives you 1000 cash");
 
